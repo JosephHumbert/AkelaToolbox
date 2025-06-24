@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Akela Toolbox</title>
+  <style>
+    body { font-family: sans-serif; max-width: 900px; margin: auto; padding: 2rem; background: #f4f4f4; }
+    nav button { margin-right: 1rem; padding: 0.5rem 1rem; cursor: pointer; }
+    section { display: none; background: white; padding: 1rem; border-radius: 4px; margin-top: 1rem; }
+    section.active { display: block; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { padding: 0.5rem; border: 1px solid #ccc; text-align: left; }
+    input, select, textarea { width: 100%; margin-bottom: 1rem; padding: 0.5rem; font-size: 1rem; }
+    button.submit-btn { padding: 0.5rem 1rem; }
+  </style>
+</head>
+<body>
+
+  <h1>Akela Toolbox</h1>
+
+  <nav>
+    <button data-target="home">Accueil</button>
+    <button data-target="list">📚 Liste des jeux Louveteaux</button>
+    <button data-target="generator">🛠 Générateur de programmes</button>
+    <button data-target="submit">➕ Soumettre un nouveau jeu</button>
+  </nav>
+
+  <!-- Accueil -->
+  <section id="home" class="active">
+    <h2>Bienvenue dans Akela Toolbox !</h2>
+    <p>Facilitez la préparation d'activités Louveteaux avec nos outils collaboratifs.</p>
+  </section>
+
+  <!-- Liste des jeux -->
+  <section id="list">
+    <h2>📚 Liste des jeux Louveteaux</h2>
+    <input id="search" type="text" placeholder="🔍 Rechercher par mot-clé" />
+    <table>
+      <thead>
+        <tr><th>Nom</th><th>Durée</th><th>Matériel</th><th>Objectif</th><th>Description</th></tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </section>
+
+  <!-- Générateur de programmes -->
+  <section id="generator">
+    <h2>🛠 Générateur de programmes</h2>
+    <form id="program-form">
+      <label>Heure de début: <input type="time" id="start-time" required></label>
+      <label>Heure de fin: <input type="time" id="end-time" required></label>
+      <label>Durée totale du trajet (min): <input type="number" id="travel-time" min="0" value="0" required></label>
+      <label>Objectif du weekend: 
+        <select id="goal" required>
+          <option value="jeu">Jeu</option>
+          <option value="technique">Technique</option>
+          <option value="mixte">Mixte</option>
+        </select>
+      </label>
+      <label>Thème du weekend: <input type="text" id="theme" placeholder="Exemple: nature, aventure..." required></label>
+      <button type="submit" class="submit-btn">Générer le programme</button>
+    </form>
+    <div id="program-output" style="white-space: pre-wrap; margin-top: 1rem; background: #eef; padding: 1rem; border-radius: 4px;"></div>
+  </section>
+
+  <!-- Soumission nouveau jeu -->
+  <section id="submit">
+    <h2>➕ Soumettre un nouveau jeu</h2>
+    <form id="submit-form">
+      <label>Nom: <input type="text" id="new-name" required></label>
+      <label>Durée (min): <input type="number" id="new-duration" required></label>
+      <label>Matériel: <input type="text" id="new-material" required></label>
+      <label>Objectif: <input type="text" id="new-goal" required></label>
+      <label>Description: <textarea id="new-description" rows="4" required></textarea></label>
+      <button type="submit" class="submit-btn">Envoyer</button>
+    </form>
+    <div id="submit-result" style="margin-top: 1rem;"></div>
+  </section>
+
+  <script>
+    // Navigation simple
+    const buttons = document.querySelectorAll("nav button");
+    const sections = document.querySelectorAll("section");
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const target = btn.dataset.target;
+        sections.forEach(sec => sec.classList.toggle("active", sec.id === target));
+      });
+    });
+
+    // Données CSV URL (à adapter)
+    const csvUrl = "https://docs.google.com/spreadsheets/d/10uIzf1QjEqgZn9OCvxaONA5va1T8xgT8p40eCXftSec/export?format=csv&gid=0";
+
+    // Parser CSV (simplifié)
+    function parseCSV(text) {
+      const lines = text.trim().split("\n");
+      const headers = lines.shift().split(",").map(h => h.trim());
+      return lines.map(line => {
+        const values = line.split(",").map(v => v.trim());
+        let obj = {};
+        headers.forEach((h, i) => {
+          obj[h] = values[i] || "";
+        });
+        return obj;
+      });
+    }
+
+    // Render table & recherche
+    const tbody = document.getElementById("tbody");
+    const searchInput = document.getElementById("search");
+    let rows = [];
+
+    function render(data) {
+      tbody.innerHTML = "";
+      if (data.length === 0) {
+        tbody.innerHTML = "<tr><td colspan='5'>Aucun résultat trouvé.</td></tr>";
+        return;
+      }
+      for (const row of data) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${row.Nom}</td>
+          <td>${row.Durée}</td>
+          <td>${row.Matériel}</td>
+          <td>${row.Objectif}</td>
+          <td>${row.Description}</td>
+        `;
+        tbody.appendChild(tr);
+      }
+    }
+
+    fetch(csvUrl)
+      .then(res => res.text())
+      .then(text => {
+        rows = parseCSV(text);
+        render(rows);
+      })
+      .catch(() => {
+        tbody.innerHTML = "<tr><td colspan='5'>Erreur de chargement des données.</td></tr>";
+      });
+
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.toLowerCase();
+      const filtered = rows.filter(row =>
+        Object.values(row).some(val => val.toLowerCase().includes(query))
+      );
+      render(filtered);
+    });
+
+    // Générateur de programmes simple (mock)
+    const programForm = document.getElementById("program-form");
+    const programOutput = document.getElementById("program-output");
+
+    programForm.addEventListener("submit", e => {
+      e.preventDefault();
+      const start = programForm["start-time"].value;
+      const end = programForm["end-time"].value;
+      const travel = +programForm["travel-time"].value;
+      const goal = programForm["goal"].value;
+      const theme = programForm["theme"].value;
+
+      // Exemple simplifié de programme généré (à améliorer)
+      const programText = `
+Programme du weekend - Thème : ${theme}
+Objectif : ${goal}
+
+Arrivée / Trajet : ${travel} min
+Installation : 30 min
+Activités ludiques : 2h
+Dîner : 1h
+Veillée : 1h30
+Petit déjeuner : 45 min
+Départ : ${end}
+      `;
+
+      programOutput.textContent = programText.trim();
+    });
+
+    // Soumission nouveau jeu
+    const submitForm = document.getElementById("submit-form");
+    const submitResult = document.getElementById("submit-result");
+
+    submitForm.addEventListener("submit", async e => {
+      e.preventDefault();
+
+      const newGame = {
+        Nom: submitForm["new-name"].value,
+        Durée: submitForm["new-duration"].value,
+        Matériel: submitForm["new-material"].value,
+        Objectif: submitForm["new-goal"].value,
+        Description: submitForm["new-description"].value,
+      };
+
+      try {
+        const response = await fetch("https://script.google.com/macros/s/AKfycbzA9la-o_XYPsSiHs-Jyk3OsJs402IuF0mRy5g75sfhFTjRu5vRSOF05PXBVL_dMjLz/exec", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newGame)
+        });
+
+        const result = await response.json();
+
+        if (result.result === "success") {
+          submitResult.textContent = "Merci ! Votre jeu a bien été soumis.";
+          submitForm.reset();
+        } else {
+          submitResult.textContent = "Erreur lors de la soumission : " + result.message;
+        }
+      } catch (err) {
+        submitResult.textContent = "Erreur réseau : " + err.message;
+      }
+    });
+  </script>
+
+</body>
+</html>
