@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Contact - Akela Toolbox</title>
+  <link rel="stylesheet" href="http://localhost:8000/site9/style.css">
+</head>
+<body>
+
+  <a href="index.html" class="back-btn">⬅ Retour à Akela Toolbox</a>
+
+  <h1>Formulaire de contact</h1>
+
+  <form id="contact-form">
+    <label for="nom">Nom</label>
+    <input type="text" name="nom" id="nom" required />
+
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email" required />
+
+    <label for="objet">Objet</label>
+    <input type="text" name="objet" id="objet" required />
+
+    <label for="message">Message</label>
+    <textarea name="message" id="message" rows="6" required></textarea>
+
+    <button type="submit" id="submit-btn">Envoyer</button>
+    <div id="loading">⏳ Envoi en cours...</div>
+
+  </form>
+
+  <div id="confirmation"></div>
+
+    <footer>
+    <p>© 2025 Akela Toolbox – Un projet scout libre. | <a href="http://localhost:8000/site9/mentions-legales.html">Mentions légales</a></p>
+    </footer>
+
+  <script>
+    const form = document.getElementById('contact-form');
+    const confirmation = document.getElementById('confirmation');
+    const loading = document.getElementById('loading');
+    const submitBtn = document.getElementById('submit-btn');
+
+    const temporaryEmailDomains = [
+      'mailinator.com', '10minutemail.com', 'guerrillamail.com', 'yopmail.com',
+      'trashmail.com', 'temp-mail.org', 'getnada.com', 'tempmail.lol',
+      'sharklasers.com', 'fakeinbox.com', 'mintemail.com', 'maildrop.cc'
+    ];
+
+    function isTemporaryEmail(email) {
+      const domain = email.split('@')[1].toLowerCase();
+      return temporaryEmailDomains.includes(domain);
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      confirmation.textContent = '';
+
+      const email = form.email.value.trim();
+      if (!email || !email.includes('@') || isTemporaryEmail(email)) {
+        confirmation.textContent = "❌ Adresse email invalide ou temporaire.";
+        return;
+      }
+
+      const data = {
+        data: {
+          nom: form.nom.value,
+          email: email,
+          objet: form.objet.value,
+          message: form.message.value,
+        }
+      };
+
+      loading.style.display = 'block';
+      submitBtn.disabled = true;
+
+      fetch('https://sheetdb.io/api/v1/7v0p7hj8agkcm', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (response.ok) {
+          confirmation.textContent = "✅ Message envoyé avec succès ! Merci pour ton contact 🐾";
+          form.reset();
+        } else {
+          confirmation.textContent = "❌ Erreur lors de l'envoi du message.";
+        }
+      })
+      .catch(() => {
+        confirmation.textContent = "❌ Une erreur s'est produite.";
+      })
+      .finally(() => {
+        loading.style.display = 'none';
+        submitBtn.disabled = false;
+      });
+    });
+  </script>
+
+</body>
+</html>

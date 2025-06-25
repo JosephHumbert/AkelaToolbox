@@ -3,33 +3,59 @@
 <head>
   <meta charset="UTF-8" />
   <title>Akela Toolbox</title>
-  <style>
-    body { font-family: sans-serif; max-width: 900px; margin: auto; padding: 2rem; background: #f4f4f4; }
-    nav button { margin-right: 1rem; padding: 0.5rem 1rem; cursor: pointer; }
-    section { display: none; background: white; padding: 1rem; border-radius: 4px; margin-top: 1rem; }
-    section.active { display: block; }
-    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-    th, td { padding: 0.5rem; border: 1px solid #ccc; text-align: left; }
-    input, select, textarea { width: 100%; margin-bottom: 1rem; padding: 0.5rem; font-size: 1rem; }
-    button.submit-btn { padding: 0.5rem 1rem; }
-  </style>
+  <meta name="description" content="Akela Toolbox - Générateur d'activités et gestion collaborative de jeux Louveteaux.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Akela Toolbox" />
+  <meta property="og:description" content="Facilitez la préparation d'activités Louveteaux grâce à des outils intelligents et une base collaborative de jeux." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://josephhumbert.github.io/AkelaToolbox/" />
+  <link rel="stylesheet" href="http://localhost:8000/site9/style.css">
 </head>
+
 <body>
 
-  <h1>Akela Toolbox</h1>
+  <h1>🐺 Akela Toolbox</h1>
 
   <nav>
     <button data-target="home">Accueil</button>
-    <button data-target="list">📚 Liste des jeux Louveteaux</button>
-    <button data-target="generator">🛠 Générateur de programmes</button>
-    <button data-target="submit">➕ Soumettre un nouveau jeu</button>
+    <button data-target="list">📚 Liste  jeux</button>
+    <button data-target="generator">🛠 AkelaAI</button>
+    <button data-target="submit">🆕 Nouveau jeu</button>
+    <button onclick="window.location.href='http://localhost:8000/site9/contact.html'">📬 Contact</button>
   </nav>
 
-  <!-- Accueil -->
-  <section id="home" class="active">
-    <h2>Bienvenue dans Akela Toolbox !</h2>
-    <p>Facilitez la préparation d'activités Louveteaux avec nos outils collaboratifs.</p>
-  </section>
+<!-- Accueil -->
+<section id="home" class="active">
+  <h2>🐾 Bienvenue sur Akela Toolbox !</h2>
+
+  <p>
+    Ce site est un outil collaboratif pensé pour les chefs Louveteaux. Il facilite la préparation, la création et le partage de jeux d'animation.
+  </p>
+
+  <h3>✨ Fonctionnalités principales</h3>
+
+  <ul>
+    <li>📚 <u><strong data-target="list" class="nav-link">Explorer</strong></u> une liste de jeux Louveteaux</li>
+    <li>🛠 <u><strong data-target="generator" class="nav-link">Générer automatiquement</strong></u> un programme d’activités avec <em>AkelaAI</em>, à partir de vos besoins</li>
+    <li>🆕 <u><strong data-target="submit" class="nav-link">Soumettre un nouveau jeu</strong></u> via un formulaire simple, pour enrichir la base de données collective</li>
+    <li>🔍 <u><strong data-target="list" class="nav-link">Rechercher</strong></u> rapidement un jeu dans la liste</li>
+    <li>📬 <u><strong><a href="http://localhost:8000/site9/contact.html">Nous contacter</a></strong></u> pour signaler un bug ou proposer une amélioration</li>
+  </ul>
+
+  <h3>📖 L'histoire du projet</h3>
+  <p>
+    Akela Toolbox est né d’un constat sur le terrain : les chefs ont souvent peu de temps pour préparer leurs activités, et les ressources sont dispersées ou obsolètes.  
+    Nous avons donc conçu un outil simple, rapide et collaboratif.
+  </p>
+  <p>
+    D’abord utilisé dans un cercle scout restreint, le site s’est étoffé avec l’ajout d’une base de données dynamique (via Google Sheets) et d’un générateur de programmes intelligent grâce à <strong>AkelaAI</strong>, un assistant basé sur un modèle de langage.
+  </p>
+  <p>
+    Ce projet reste libre et communautaire. Chaque contribution (jeu, retour, idée) est précieuse et aide à construire un outil utile pour tous les chefs de meute. Merci d’en faire partie !
+  </p>
+</section>
+
 
   <!-- Liste des jeux -->
   <section id="list">
@@ -47,11 +73,14 @@
 <section id="generator">
   <h2>💬 AkelaAI (Powered by Mistral)</h2>
 
+  <p>Ce modèle permet de générer des emplois du temps pour vos activités. Plus votre demande est détaillée meilleure sera sa réponse. Les jeux proposés viennent de la base de données collaborative d'Akela Toolbox (Onglet Liste jeux).</p>
+
   <textarea id="userPrompt" rows="5" placeholder="Ex : Génère un programme du samedi 10h au dimanche 16h, thème jungle, objectif cohésion, trajet 30 min" disabled></textarea>
   <button id="sendBtn" disabled>Chargement des jeux...</button>
 
   <h2>🧠 Réponse :</h2>
-  <div id="program-output" style="white-space: pre-wrap; margin-top: 1rem; background: #eef; padding: 1rem; border-radius: 4px; min-height: 150px;">En attente...</div>
+  <div id="program-output">En attente...</div>
+
 </section>
 
 
@@ -66,17 +95,24 @@
       <label>Description: <textarea id="new-description" rows="4" required></textarea></label>
       <button type="submit" class="submit-btn">Envoyer</button>
     </form>
-    <div id="submit-result" style="margin-top: 1rem;"></div>
+    <div id="submit-result" style="margin-top: 1rem;">Cliquez sur envoyer pour ajouter votre jeu a la base de données.</div>
   </section>
+
+  <footer>
+  <p>© 2025 Akela Toolbox – Un projet scout libre. | <a href="http://localhost:8000/site9/mentions-legales.html">Mentions légales</a></p>
+  </footer>
 
   <script>
   // Navigation simple
-  const buttons = document.querySelectorAll("nav button");
+  const navElements = document.querySelectorAll("[data-target]");
   const sections = document.querySelectorAll("section");
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const target = btn.dataset.target;
-      sections.forEach(sec => sec.classList.toggle("active", sec.id === target));
+
+  navElements.forEach(el => {
+    el.addEventListener("click", () => {
+      const target = el.dataset.target;
+      sections.forEach(sec => {
+        sec.classList.toggle("active", sec.id === target);
+      });
     });
   });
 
