@@ -44,24 +44,16 @@
   </section>
 
   <!-- Générateur de programmes -->
-  <section id="generator">
-    <h2>🛠 Générateur de programmes</h2>
-    <form id="program-form">
-      <label>Heure de début: <input type="time" id="start-time" required></label>
-      <label>Heure de fin: <input type="time" id="end-time" required></label>
-      <label>Durée totale du trajet (min): <input type="number" id="travel-time" min="0" value="0" required></label>
-      <label>Objectif du weekend: 
-        <select id="goal" required>
-          <option value="jeu">Jeu</option>
-          <option value="technique">Technique</option>
-          <option value="mixte">Mixte</option>
-        </select>
-      </label>
-      <label>Thème du weekend: <input type="text" id="theme" placeholder="Exemple: nature, aventure..." required></label>
-      <button type="submit" class="submit-btn">Générer le programme</button>
-    </form>
-    <div id="program-output" style="white-space: pre-wrap; margin-top: 1rem; background: #eef; padding: 1rem; border-radius: 4px;"></div>
-  </section>
+<section id="generator">
+  <h2>💬 AkelaAI (Powered by Mistral)</h2>
+
+  <textarea id="userPrompt" rows="5" placeholder="Ex : Génère un programme du samedi 10h au dimanche 16h, thème jungle, objectif cohésion, trajet 30 min" disabled></textarea>
+  <button id="sendBtn" disabled>Chargement des jeux...</button>
+
+  <h2>🧠 Réponse :</h2>
+  <div id="program-output" style="white-space: pre-wrap; margin-top: 1rem; background: #eef; padding: 1rem; border-radius: 4px; min-height: 150px;">En attente...</div>
+</section>
+
 
   <!-- Soumission nouveau jeu -->
   <section id="submit">
@@ -148,33 +140,99 @@
   });
 
   // Générateur de programmes
-  const programForm = document.getElementById("program-form");
-  const programOutput = document.getElementById("program-output");
+  // On conserve les fonctions parseCSV et la variable csvUrl ainsi que la récupération des jeux dans rows
 
-  programForm.addEventListener("submit", e => {
-    e.preventDefault();
-    const start = programForm["start-time"].value;
-    const end = programForm["end-time"].value;
-    const travel = +programForm["travel-time"].value;
-    const goal = programForm["goal"].value;
-    const theme = programForm["theme"].value;
+let games = [];  // on utilisera games pour la base complète
 
-    const programText = `
-Programme du weekend - Thème : ${theme}
-Objectif : ${goal}
-
-Heure d'arrivée : ${start}
-Trajet : ${travel} min
-Installation : 30 min
-Activités ludiques : 2h
-Dîner : 1h
-Veillée : 1h30
-Petit déjeuner : 45 min
-Départ : ${end}
-    `;
-
-    programOutput.textContent = programText.trim();
+// Charger et parser la base CSV (remplace fetch csvUrl dans la partie list aussi, pour éviter double fetch)
+fetch(csvUrl)
+  .then(res => res.text())
+  .then(text => {
+    games = parseCSV(text);
+    render(rows); // On continue d’afficher la liste comme avant (rows === games)
+    
+    // Après chargement, activer textarea + bouton dans la section générateur
+    const sendBtn = document.getElementById("sendBtn");
+    const userPrompt = document.getElementById("userPrompt");
+    sendBtn.disabled = false;
+    sendBtn.textContent = "Envoyer à AkelaAI";
+    userPrompt.disabled = false;
+  })
+  .catch(() => {
+    tbody.innerHTML = "<tr><td colspan='5'>Erreur de chargement des données.</td></tr>";
+    alert("Impossible de charger les jeux. Réessayez plus tard.");
   });
+
+// Préfixe prompt IA
+const PREFIX_PROMPT = `Tu es un assistant scout expert dans l’organisation d’activités pour les Louveteaux.
+
+Ton rôle est de générer des programmes détaillés pour des week-ends ou journées scoutes, selon des paramètres donnés par un chef.
+
+Les jeux que tu inclus proviennent uniquement de la base de données fournie et les timings sont coherents.
+
+horaires imposes:
+- Montage des tentes en debut d'apres midi
+- 60 minutes de preparation du diner/de la veillee
+- Le dîner dure 60 minutes.
+- La veillée dure 90 minutes.
+- Le coucher est toujours à 21h00 maximum. Si une activité dépasse, elle est coupée.
+- Dodo de 21h00 à 8h15.
+- 08h15–08h30 : Réveil et dérouillage (15 min)
+- 08h30–09h15 : Petit déjeuner (45 min)
+- 09h15–09h45 : Désinstallation (30 min)
+- Rassemblement final 10 minutes a la fin du weekend
+- JAMAIS DE TEMPS LIBRE SAUF POUR LE SOMMEIL LA NUIT
+
+Tes réponses sont toujours très brèves (sauf pour les jeux dont tu fais une description copiee collee de la base de donnees) et en texte pur.
+
+Commence maintenant avec le prompt utilisateur suivant :
+`;
+
+const API_KEY = "ySiMyJNfTK46OI3TYjDsu1wUqYGBvXeN";
+
+async function sendPrompt() {
+  const userInput = document.getElementById("userPrompt").value.trim();
+  if (!userInput) {
+    alert("Veuillez saisir un prompt.");
+    return;
+  }
+
+  const programOutput = document.getElementById("program-output");
+  programOutput.textContent = "⏳ Chargement...";
+
+  try {
+    // Construire prompt complet
+    const gamesString = JSON.stringify(games, null, 2);
+    const fullPrompt = `${PREFIX_PROMPT}\nBase de données jeux :\n${gamesString}\n\n${userInput}`;
+
+    const res = await fetch("https://api.mistral.ai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${API_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "mistral-medium",
+        messages: [{ role: "user", content: fullPrompt }],
+        temperature: 0.7
+      })
+    });
+
+    if (!res.ok) throw new Error("Erreur HTTP : " + res.status);
+    const data = await res.json();
+    const reply = data.choices?.[0]?.message?.content || "❌ Pas de réponse.";
+
+    programOutput.textContent = reply;
+
+  } catch (err) {
+    console.error(err);
+    programOutput.textContent = "❌ Erreur lors de l'appel à l'API.";
+  }
+}
+
+// Lier l’événement au bouton
+document.getElementById("sendBtn").addEventListener("click", sendPrompt);
+
 
   // Soumission nouveau jeu en GET avec params dans l'URL
   const submitForm = document.getElementById("submit-form");
@@ -203,6 +261,15 @@ submitForm.addEventListener("submit", async e => {
 
     submitResult.textContent = "✅ Merci ! Jeu soumis avec succès.";
     submitForm.reset();
+    submitResult.textContent = "✅ Merci ! Jeu soumis avec succès.";
+// Bloquer l'écran (optionnel, par exemple en désactivant le formulaire ou en affichant un overlay)
+submitForm.querySelectorAll("input, textarea, button").forEach(el => el.disabled = true);
+
+// Attendre 2 secondes puis rafraîchir la page
+setTimeout(() => {
+  location.reload();
+}, 2000);
+
   } catch (err) {
     submitResult.textContent = "❌ Erreur réseau ou serveur : " + err.message;
   }
