@@ -118,7 +118,8 @@ th, td {
   color: #c0ffc0;
   font-weight: 500;
   background: #0f1a0f;
-  white-space: nowrap;
+  /* white-space: nowrap; ← supprime cette ligne */
+  word-break: break-word; /* permet de couper les longs mots */
 }
 th {
   background: #203820;
