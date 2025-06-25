@@ -217,38 +217,55 @@ button:hover, .submit-btn:hover, #sendBtn:hover {
   50% { opacity: 1; }
 }
 
-/* --- RESPONSIVE ADAPTATION --- */
+/* --- RESPONSIVE --- */
+* {
+  box-sizing: border-box;
+}
+
 @media (max-width: 768px) {
   body {
     padding: 1rem;
+    max-width: 100%;
   }
+
   nav {
     flex-direction: column;
     align-items: stretch;
   }
-  nav button {
+
+  nav button,
+  button, .submit-btn, #sendBtn {
     width: 100%;
     max-width: none;
   }
-  input, select, textarea {
-    font-size: 0.95rem;
-  }
-  button, .submit-btn, #sendBtn {
+
+  form {
     width: 100%;
+    margin: 0;
   }
+
+  input, select, textarea {
+    width: 100%;
+    font-size: 1rem;
+  }
+
   th, td {
     font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+
+  h1, h2 {
+    font-size: 1.6rem;
+    text-align: center;
   }
 }
 
 @media (max-width: 400px) {
-  h1, h2 {
-    font-size: 1.5rem;
-  }
   input, select, textarea {
     font-size: 0.85rem;
   }
-  th, td {
-    padding: 0.5rem;
+
+  h1, h2 {
+    font-size: 1.4rem;
   }
 }
