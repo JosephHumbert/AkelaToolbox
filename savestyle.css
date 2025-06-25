@@ -1,0 +1,224 @@
+/* --- GLOBAL --- */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 900px;
+  margin: auto;
+  padding: 2rem;
+  background: #0a140a;
+  color: #a0ffa0;
+}
+
+/* --- HEADINGS & TEXT --- */
+h1, h2 {
+  color: #76ff4d;
+  text-shadow: 0 0 8px #76ff4daa;
+  font-weight: 700;
+}
+p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+a {
+  color: #39ff14;
+  text-decoration: underline;
+}
+
+/* --- BACK BUTTON --- */
+.back-btn {
+  display: inline-block;
+  margin-bottom: 2rem;
+  background: transparent;
+  border: 2px solid #39ff14;
+  color: #39ff14;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.back-btn:hover {
+  background-color: #2a621f;
+  color: #d0ffd0;
+}
+
+/* --- NAVIGATION --- */
+nav {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+nav button {
+  flex-grow: 1;
+  max-width: 150px;
+  min-width: 100px;
+  background: transparent;
+  border: 2px solid #39ff14;
+  color: #39ff14;
+  padding: 0.6rem 0.8rem;
+  cursor: pointer;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 10px #39ff14aa;
+  white-space: nowrap;
+  text-align: center;
+}
+nav button:hover,
+nav button:focus {
+  background-color: #39ff14;
+  color: #0a0f0a;
+  box-shadow: 0 0 15px #39ff14dd;
+  outline: none;
+}
+
+/* --- SECTIONS --- */
+section {
+  display: none;
+  background: #121a12;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-top: 1.5rem;
+  box-shadow: 0 8px 20px rgba(57, 255, 20, 0.25);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+section.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- TABLES --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 15px #39ff14aa;
+}
+th, td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #39ff1455;
+  text-align: left;
+  color: #c0ffc0;
+  font-weight: 500;
+  background: #0f1a0f;
+}
+th {
+  background: #203820;
+  color: #d0ffd0;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+tbody tr:hover {
+  background-color: #2a621f88;
+}
+
+/* --- FORMS --- */
+label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+input, select, textarea {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.65rem 0.8rem;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: 1.5px solid #39ff14;
+  background: #162216;
+  color: #a0ffa0;
+  box-shadow: inset 0 1px 5px rgba(0,0,0,0.6);
+  font-weight: 600;
+  font-family: inherit;
+}
+input::placeholder,
+textarea::placeholder {
+  color: #4d944d;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: #76ff4d;
+  box-shadow: 0 0 8px #76ff4d99;
+  outline: none;
+}
+
+/* --- BUTTONS (Unifié) --- */
+button, .submit-btn, #sendBtn {
+  padding: 0.8rem 1.5rem;
+  height: 48px;
+  background-color: #2ea42e;
+  color: #d0ffd0;
+  border: 1.5px solid #39ff14;
+  box-shadow: 0 0 10px #39ff14aa;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+}
+button:hover, .submit-btn:hover, #sendBtn:hover {
+  background-color: #39ff14;
+  box-shadow: 0 0 15px #39ff14dd;
+  color: #0a0f0a;
+}
+#sendBtn:disabled {
+  background-color: #0c150c;
+  border-color: #1a2e1a;
+  color: #385838;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* --- RESULTS / OUTPUT --- */
+#program-output, #submit-result, #response, #confirmation {
+  white-space: pre-wrap;
+  background: #162216;
+  padding: 1rem;
+  border-radius: 12px;
+  color: #a0ffa0;
+  box-shadow: inset 0 0 10px #39ff1488;
+  min-height: 150px;
+  font-family: "Segoe UI Mono", Consolas, monospace;
+}
+
+/* --- LOADING --- */
+#loading {
+  margin-top: 1rem;
+  color: #39ff14;
+  font-style: italic;
+  display: none;
+}
+.loading::after {
+  content: "⏳";
+  animation: pulse 1s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 600px) {
+  body {
+    padding: 1rem;
+  }
+  nav button {
+    margin-bottom: 0.5rem;
+    width: 100%;
+    max-width: none;
+    min-width: auto;
+  }
+  input, select, textarea {
+    font-size: 0.9rem;
+  }
+  button, .submit-btn, #sendBtn {
+    width: 100%;
+  }
+}
