@@ -3,7 +3,7 @@
 Bienvenue sur **Akela Toolbox**, un outil collaboratif pensé pour les **chefs Louveteaux**.  
 Ce site facilite la **préparation**, la **création** et le **partage de jeux d'animation**.
 
-🌍 Accès en ligne : [https://josephhumbert.github.io/AkelaToolbox/index.html](https://josephhumbert.github.io/AkelaToolbox/index.html)
+🌍 Accès en ligne : [AkelaToolbox](https://josephhumbert.github.io/AkelaToolbox/index.html)
 
 ---
 
