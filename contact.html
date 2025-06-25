@@ -4,6 +4,13 @@
   <meta charset="UTF-8" />
   <title>Contact - Akela Toolbox</title>
   <link rel="stylesheet" href="http://localhost:8000/site9/style.css">
+  <style>
+    #feedback {
+      margin-top: 1em;
+      font-weight: bold;
+      color: #444;
+    }
+  </style>
 </head>
 <body>
 
@@ -25,20 +32,19 @@
     <textarea name="message" id="message" rows="6" required></textarea>
 
     <button type="submit" id="submit-btn">Envoyer</button>
-    <div id="loading">⏳ Envoi en cours...</div>
-
   </form>
 
-  <div id="confirmation"></div>
+  <div id="feedback">💬 Saisissez votre message.</div>
 
-    <footer>
-    <p>© 2025 Akela Toolbox – Un projet scout libre. | <a href="http://localhost:8000/site9/mentions-legales.html">Mentions légales</a></p>
-    </footer>
+  <footer>
+    <p>© 2025 Akela Toolbox – Un projet scout libre. |
+      <a href="http://localhost:8000/site9/mentions-legales.html">Mentions légales</a>
+    </p>
+  </footer>
 
   <script>
     const form = document.getElementById('contact-form');
-    const confirmation = document.getElementById('confirmation');
-    const loading = document.getElementById('loading');
+    const feedback = document.getElementById('feedback');
     const submitBtn = document.getElementById('submit-btn');
 
     const temporaryEmailDomains = [
@@ -54,11 +60,11 @@
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      confirmation.textContent = '';
+      feedback.textContent = '';
 
       const email = form.email.value.trim();
       if (!email || !email.includes('@') || isTemporaryEmail(email)) {
-        confirmation.textContent = "❌ Adresse email invalide ou temporaire.";
+        feedback.textContent = "❌ Adresse email invalide ou temporaire.";
         return;
       }
 
@@ -71,7 +77,7 @@
         }
       };
 
-      loading.style.display = 'block';
+      feedback.textContent = "⏳ Envoi en cours...";
       submitBtn.disabled = true;
 
       fetch('https://sheetdb.io/api/v1/7v0p7hj8agkcm', {
@@ -83,17 +89,16 @@
       })
       .then(response => {
         if (response.ok) {
-          confirmation.textContent = "✅ Message envoyé avec succès ! Merci pour ton contact 🐾";
+          feedback.textContent = "✅ Message envoyé avec succès ! Merci pour ton contact 🐾";
           form.reset();
         } else {
-          confirmation.textContent = "❌ Erreur lors de l'envoi du message.";
+          feedback.textContent = "❌ Erreur lors de l'envoi du message.";
         }
       })
       .catch(() => {
-        confirmation.textContent = "❌ Une erreur s'est produite.";
+        feedback.textContent = "❌ Une erreur s'est produite.";
       })
       .finally(() => {
-        loading.style.display = 'none';
         submitBtn.disabled = false;
       });
     });
