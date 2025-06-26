@@ -20,7 +20,7 @@
   <!-- Navbar dynamique -->
   <div id="navbar"></div>
   <script>
-    fetch('https://josephhumbert.github.io/AkelaToolbox/navbar.html')
+    fetch('https://josephhumbert.github.io/AkelaToolbox/includes/navbar.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('navbar').innerHTML = html;
@@ -49,7 +49,7 @@
   <!-- Footer -->
   <div id="footer"></div>
   <script>
-    fetch("https://josephhumbert.github.io/AkelaToolbox/footer.html")
+    fetch("https://josephhumbert.github.io/AkelaToolbox/includes/footer.html")
       .then(res => res.text())
       .then(html => document.getElementById("footer").innerHTML = html);
   </script>
