@@ -3,45 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <title>Contact - Akela Toolbox</title>
-  <link rel="stylesheet" href="https://josephhumbert.github.io/AkelaToolbox/style.css">
-  <style>
-    #feedback {
-      margin-top: 1em;
-      font-weight: bold;
-      color: #444;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="http://localhost:8000/site13/style.css">
 </head>
+
 <body>
 
-  <a href="index.html" class="back-btn">⬅ Retour à Akela Toolbox</a>
+  <h1>🐺 Akela Toolbox</h1>
 
-  <h1>Formulaire de contact</h1>
+  <!-- navbar -->
+  <div id="navbar"></div>
+  <script>
+    fetch('http://localhost:8000/site13/includes/navbar.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('navbar').innerHTML = html;
+      });
+  </script>
 
-  <form id="contact-form">
-    <label for="nom">Nom</label>
-    <input type="text" name="nom" id="nom" required />
+  <!-- Section Contact -->
+  <section id="contact" class="active">
+    <h2>📬 Formulaire de contact</h2>
 
-    <label for="email">Email</label>
-    <input type="email" name="email" id="email" required />
+    <form id="contact-form">
+      <label for="nom">Nom</label>
+      <input type="text" name="nom" id="nom" required />
 
-    <label for="objet">Objet</label>
-    <input type="text" name="objet" id="objet" required />
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" required />
 
-    <label for="message">Message</label>
-    <textarea name="message" id="message" rows="6" required></textarea>
+      <label for="objet">Objet</label>
+      <input type="text" name="objet" id="objet" required />
 
-    <button type="submit" id="submit-btn">Envoyer</button>
-  </form>
+      <label for="message">Message</label>
+      <textarea name="message" id="message" rows="6" required></textarea>
 
-  <div id="feedback">💬 Saisissez votre message.</div>
+      <button type="submit" id="submit-btn">Envoyer</button>
+    </form>
 
-  <footer>
-    <p>© 2025 Akela Toolbox – Un projet scout libre. |
-      <a href="https://josephhumbert.github.io/AkelaToolbox/mentions-legales.html">Mentions légales</a>
-    </p>
-  </footer>
+    <div id="feedback">💬 Saisissez votre message.</div>
+  </section>
 
+  <!-- footer -->
+  <div id="footer"></div>
+  <script>
+    fetch("http://localhost:8000/site13/includes/footer.html")
+      .then(res => res.text())
+      .then(html => document.getElementById("footer").innerHTML = html);
+  </script>
+
+  <!-- Script de validation et d'envoi -->
   <script>
     const form = document.getElementById('contact-form');
     const feedback = document.getElementById('feedback');

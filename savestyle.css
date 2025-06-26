@@ -8,6 +8,12 @@ body {
   color: #a0ffa0;
 }
 
+#feedback {
+      margin-top: 1em;
+      font-weight: bold;
+      color: #444;
+    }
+
 /* --- HEADINGS & TEXT --- */
 h1, h2 {
   color: #76ff4d;
@@ -205,20 +211,37 @@ button:hover, .submit-btn:hover, #sendBtn:hover {
 }
 
 /* --- RESPONSIVE --- */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   body {
     padding: 1rem;
   }
+  nav {
+    flex-direction: column;
+    align-items: stretch;
+  }
   nav button {
-    margin-bottom: 0.5rem;
     width: 100%;
     max-width: none;
-    min-width: auto;
   }
   input, select, textarea {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
   }
   button, .submit-btn, #sendBtn {
     width: 100%;
+  }
+  th, td {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 400px) {
+  h1, h2 {
+    font-size: 1.5rem;
+  }
+  input, select, textarea {
+    font-size: 0.85rem;
+  }
+  th, td {
+    padding: 0.5rem;
   }
 }

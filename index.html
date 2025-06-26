@@ -10,307 +10,58 @@
   <meta property="og:description" content="Facilitez la préparation d'activités Louveteaux grâce à des outils intelligents et une base collaborative de jeux." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://josephhumbert.github.io/AkelaToolbox/" />
-  <link rel="stylesheet" href="https://josephhumbert.github.io/AkelaToolbox/style.css">
+  <link rel="stylesheet" href="http://localhost:8000/site13/style.css">
 </head>
 
 <body>
 
   <h1>🐺 Akela Toolbox</h1>
 
-  <nav>
-    <button data-target="home">Accueil</button>
-    <button data-target="list">📚 Liste  jeux</button>
-    <button data-target="generator">🛠 AkelaAI</button>
-    <button data-target="submit">🆕 Nouveau jeu</button>
-    <button onclick="window.location.href='https://josephhumbert.github.io/AkelaToolbox/contact.html'">📬 Contact</button>
-  </nav>
-  
-<!-- Accueil -->
-<section id="home" class="active">
-  <h2>🐾 Bienvenue sur Akela Toolbox !</h2>
-
-  <p>
-    Ce site est un outil collaboratif pensé pour les chefs Louveteaux. Il facilite la préparation, la création et le partage de jeux d'animation.
-  </p>
-
-  <h3>✨ Fonctionnalités principales</h3>
-
-  <ul>
-    <li>📚 <u><strong data-target="list" class="nav-link">Explorer</strong></u> une liste de jeux Louveteaux</li>
-    <li>🔍 <u><strong data-target="list" class="nav-link">Rechercher</strong></u> rapidement un jeu dans la liste</li>
-    <li>🛠 <u><strong data-target="generator" class="nav-link">Générer automatiquement</strong></u> un programme d’activités avec <em>AkelaAI</em>, à partir de vos besoins</li>
-    <li>🆕 <u><strong data-target="submit" class="nav-link">Soumettre un nouveau jeu</strong></u> via un formulaire simple, pour enrichir la base de données collective</li>
-    <li>📬 <u><strong><a href="https://josephhumbert.github.io/AkelaToolbox/contact.html">Nous contacter</a></strong></u> pour signaler un bug ou proposer une amélioration</li>
-  </ul>
-
-  <h3>📖 L'histoire du projet</h3>
-  <p>
-    Akela Toolbox est né d’un constat sur le terrain : les chefs ont souvent peu de temps pour préparer leurs activités, et les ressources sont dispersées ou obsolètes.  
-    Nous avons donc conçu un outil simple, rapide et collaboratif.
-  </p>
-  <p>
-    D’abord utilisé dans un cercle scout restreint, le site s’est étoffé avec l’ajout d’une base de données dynamique et d’un générateur de programmes intelligent grâce à <u><strong data-target="generator" class="nav-link">AkelaAI</strong></u>, un assistant basé sur un modèle de langage.
-  </p>
-  <p>
-    Ce projet reste libre et communautaire. Chaque contribution (jeu, retour, idée) est précieuse et aide à construire un outil utile pour tous les chefs de meute. Merci d’en faire partie !
-  </p>
-</section>
-
-
-  <!-- Liste des jeux -->
-  <section id="list">
-    <h2>📚 Liste des jeux Louveteaux</h2>
-    <input id="search" type="text" placeholder="🔍 Rechercher par mot-clé" />
-    <table>
-      <thead>
-        <tr><th>Nom</th><th>Durée</th><th>Matériel</th><th>Objectif</th><th>Description</th></tr>
-      </thead>
-      <tbody id="tbody"></tbody>
-    </table>
-  </section>
-
-  <!-- Générateur de programmes -->
-<section id="generator">
-  <h2>💬 AkelaAI (Powered by Mistral)</h2>
-
-  <p>Ce modèle permet de générer des emplois du temps pour vos activités. Plus votre demande est détaillée meilleure sera sa réponse. Les jeux proposés viennent de la base de données collaborative d'Akela Toolbox (Onglet Liste jeux).</p>
-
-  <textarea id="userPrompt" rows="5" placeholder="Ex : Génère un programme du samedi 10h au dimanche 16h, thème jungle, objectif cohésion, trajet 30 min" disabled></textarea>
-  <button id="sendBtn" disabled>Chargement des jeux...</button>
-
-  <h2>🧠 Réponse :</h2>
-  <div id="program-output">En attente...</div>
-
-</section>
-
-
-  <!-- Soumission nouveau jeu -->
-  <section id="submit">
-    <h2>➕ Soumettre un nouveau jeu</h2>
-    <form id="submit-form">
-      <label>Nom: <input type="text" id="new-name" required></label>
-      <label>Durée (min): <input type="number" id="new-duration" required></label>
-      <label>Matériel: <input type="text" id="new-material" required></label>
-      <label>Objectif: <input type="text" id="new-goal" required></label>
-      <label>Description: <textarea id="new-description" rows="4" required></textarea></label>
-      <button type="submit" class="submit-btn">Envoyer</button>
-    </form>
-    <div id="submit-result" style="margin-top: 1rem;">Cliquez sur envoyer pour ajouter votre jeu a la base de données.</div>
-  </section>
-
-  <footer>
-  <p>© 2025 Akela Toolbox – Un projet scout libre. | <a href="https://josephhumbert.github.io/AkelaToolbox/mentions-legales.html">Mentions légales</a></p>
-  </footer>
-
+  <!-- navbar -->
+  <div id="navbar"></div>
   <script>
-  // Navigation simple
-  const navElements = document.querySelectorAll("[data-target]");
-  const sections = document.querySelectorAll("section");
-
-  navElements.forEach(el => {
-    el.addEventListener("click", () => {
-      const target = el.dataset.target;
-      sections.forEach(sec => {
-        sec.classList.toggle("active", sec.id === target);
+    fetch('http://localhost:8000/site13/includes/navbar.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('navbar').innerHTML = html;
       });
-    });
-  });
+  </script>
 
-  // Données CSV depuis Google Sheets
-  const csvUrl = "https://docs.google.com/spreadsheets/d/10uIzf1QjEqgZn9OCvxaONA5va1T8xgT8p40eCXftSec/export?format=csv&gid=0";
+  <!-- Accueil -->
+  <section id="home" class="active">
+    <h2>🐾 Bienvenue sur Akela Toolbox !</h2>
+    <p>
+      Ce site est un outil collaboratif pensé pour les chefs Louveteaux. Il facilite la préparation, la création et le partage de jeux d'animation.
+    </p>
 
-  // Parser CSV
-  function parseCSV(text) {
-    const lines = text.trim().split("\n");
-    const headers = lines.shift().split(",").map(h => h.trim());
-    return lines.map(line => {
-      const values = line.split(",").map(v => v.trim());
-      let obj = {};
-      headers.forEach((h, i) => {
-        obj[h] = values[i] || "";
-      });
-      return obj;
-    });
-  }
+    <h3>✨ Fonctionnalités principales</h3>
+    <ul>
+      <li>📚 <a href="http://localhost:8000/site13/liste-jeux.html">Explorer</a> une liste de jeux Louveteaux</li>
+      <li>🔍 <a href="http://localhost:8000/site13/liste-jeux.html">Rechercher</a> rapidement un jeu dans la liste</li>
+      <li>🛠 <a href="http://localhost:8000/site13/generateur.html">Générer automatiquement</a> un programme d’activités avec <em>AkelaAI</em>, à partir de vos besoins</li>
+      <li>🆕 <a href="http://localhost:8000/site13/nouveau-jeu.html">Soumettre un nouveau jeu</a> via un formulaire simple, pour enrichir la base de données collective</li>
+      <li>📬 <a href="http://localhost:8000/site13/contact.html">Nous contacter</a> pour signaler un bug ou proposer une amélioration</li>
+    </ul>
 
-  // Render jeux + recherche
-  const tbody = document.getElementById("tbody");
-  const searchInput = document.getElementById("search");
-  let rows = [];
+    <h3>📖 L'histoire du projet</h3>
+    <p>
+      Akela Toolbox est né d’un constat sur le terrain : les chefs ont souvent peu de temps pour préparer leurs activités, et les ressources sont dispersées ou obsolètes.  
+      Nous avons donc conçu un outil simple, rapide et collaboratif.
+    </p>
+    <p>
+      D’abord utilisé dans un cercle scout restreint, le site s’est étoffé avec l’ajout d’une base de données dynamique et d’un générateur de programmes intelligent grâce à <a href="http://localhost:8000/site13/generateur.html">AkelaAI</a>, un assistant basé sur un modèle de langage.
+    </p>
+    <p>
+      Ce projet reste libre et communautaire. Chaque contribution (jeu, retour, idée) est précieuse et aide à construire un outil utile pour tous les chefs de meute. Merci d’en faire partie !
+    </p>
+  </section>
 
-  function render(data) {
-    tbody.innerHTML = "";
-    if (data.length === 0) {
-      tbody.innerHTML = "<tr><td colspan='5'>Aucun résultat trouvé.</td></tr>";
-      return;
-    }
-    for (const row of data) {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${row.Nom}</td>
-        <td>${row.Durée}</td>
-        <td>${row.Matériel}</td>
-        <td>${row.Objectif}</td>
-        <td>${row.Description}</td>
-      `;
-      tbody.appendChild(tr);
-    }
-  }
-
-  fetch(csvUrl)
-    .then(res => res.text())
-    .then(text => {
-      rows = parseCSV(text);
-      render(rows);
-    })
-    .catch(() => {
-      tbody.innerHTML = "<tr><td colspan='5'>Erreur de chargement des données.</td></tr>";
-    });
-
-  searchInput.addEventListener("input", () => {
-    const query = searchInput.value.toLowerCase();
-    const filtered = rows.filter(row =>
-      Object.values(row).some(val => val.toLowerCase().includes(query))
-    );
-    render(filtered);
-  });
-
-  // Générateur de programmes
-  // On conserve les fonctions parseCSV et la variable csvUrl ainsi que la récupération des jeux dans rows
-
-let games = [];  // on utilisera games pour la base complète
-
-// Charger et parser la base CSV (remplace fetch csvUrl dans la partie list aussi, pour éviter double fetch)
-fetch(csvUrl)
-  .then(res => res.text())
-  .then(text => {
-    games = parseCSV(text);
-    render(rows); // On continue d’afficher la liste comme avant (rows === games)
-    
-    // Après chargement, activer textarea + bouton dans la section générateur
-    const sendBtn = document.getElementById("sendBtn");
-    const userPrompt = document.getElementById("userPrompt");
-    sendBtn.disabled = false;
-    sendBtn.textContent = "Envoyer à AkelaAI";
-    userPrompt.disabled = false;
-  })
-  .catch(() => {
-    tbody.innerHTML = "<tr><td colspan='5'>Erreur de chargement des données.</td></tr>";
-    alert("Impossible de charger les jeux. Réessayez plus tard.");
-  });
-
-// Préfixe prompt IA
-const PREFIX_PROMPT = `Tu es un assistant scout expert dans l’organisation d’activités pour les Louveteaux.
-
-Ton rôle est de générer des programmes détaillés pour des week-ends ou journées scoutes, selon des paramètres donnés par un chef.
-
-Les jeux que tu inclus proviennent uniquement de la base de données fournie et les timings sont coherents.
-
-horaires imposes:
-- Montage des tentes en debut d'apres midi
-- 60 minutes de preparation du diner/de la veillee
-- Le dîner dure 60 minutes.
-- La veillée dure 90 minutes.
-- Le coucher est toujours à 21h00 maximum. Si une activité dépasse, elle est coupée.
-- Dodo de 21h00 à 8h15.
-- 08h15–08h30 : Réveil et dérouillage (15 min)
-- 08h30–09h15 : Petit déjeuner (45 min)
-- 09h15–09h45 : Désinstallation (30 min)
-- Rassemblement final 10 minutes a la fin du weekend
-- JAMAIS DE TEMPS LIBRE SAUF POUR LE SOMMEIL LA NUIT
-
-Tes réponses sont toujours très brèves (sauf pour les jeux dont tu fais une description copiee collee de la base de donnees) et en texte pur.
-
-Commence maintenant avec le prompt utilisateur suivant :
-`;
-
-const API_KEY = "ySiMyJNfTK46OI3TYjDsu1wUqYGBvXeN";
-
-async function sendPrompt() {
-  const userInput = document.getElementById("userPrompt").value.trim();
-  if (!userInput) {
-    alert("Veuillez saisir un prompt.");
-    return;
-  }
-
-  const programOutput = document.getElementById("program-output");
-  programOutput.textContent = "⏳ Chargement...";
-
-  try {
-    // Construire prompt complet
-    const gamesString = JSON.stringify(games, null, 2);
-    const fullPrompt = `${PREFIX_PROMPT}\nBase de données jeux :\n${gamesString}\n\n${userInput}`;
-
-    const res = await fetch("https://api.mistral.ai/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${API_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model: "mistral-medium",
-        messages: [{ role: "user", content: fullPrompt }],
-        temperature: 0.7
-      })
-    });
-
-    if (!res.ok) throw new Error("Erreur HTTP : " + res.status);
-    const data = await res.json();
-    const reply = data.choices?.[0]?.message?.content || "❌ Pas de réponse.";
-
-    programOutput.textContent = reply;
-
-  } catch (err) {
-    console.error(err);
-    programOutput.textContent = "❌ Erreur lors de l'appel à l'API.";
-  }
-}
-
-// Lier l’événement au bouton
-document.getElementById("sendBtn").addEventListener("click", sendPrompt);
-
-
-  // Soumission nouveau jeu en GET avec params dans l'URL
-  const submitForm = document.getElementById("submit-form");
-  const submitResult = document.getElementById("submit-result");
-
-  // Soumission nouveau jeu via SheetDB (POST JSON)
-submitForm.addEventListener("submit", async e => {
-  e.preventDefault();
-
-  const data = {
-    Nom: submitForm["new-name"].value.trim(),
-    Durée: submitForm["new-duration"].value.trim(),
-    Matériel: submitForm["new-material"].value.trim(),
-    Objectif: submitForm["new-goal"].value.trim(),
-    Description: submitForm["new-description"].value.trim(),
-  };
-
-  try {
-    const response = await fetch("https://sheetdb.io/api/v1/dtoqbws6n5hif", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ data })
-    });
-
-    if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
-
-    submitResult.textContent = "✅ Merci ! Jeu soumis avec succès.";
-    submitForm.reset();
-    submitResult.textContent = "✅ Merci ! Jeu soumis avec succès.";
-// Bloquer l'écran (optionnel, par exemple en désactivant le formulaire ou en affichant un overlay)
-submitForm.querySelectorAll("input, textarea, button").forEach(el => el.disabled = true);
-
-// Attendre 2 secondes puis rafraîchir la page
-setTimeout(() => {
-  location.reload();
-}, 2000);
-
-  } catch (err) {
-    submitResult.textContent = "❌ Erreur réseau ou serveur : " + err.message;
-  }
-});
-
+  <!-- footer -->
+  <div id="footer"></div>
+  <script>
+    fetch("http://localhost:8000/site13/includes/footer.html")
+      .then(res => res.text())
+      .then(html => document.getElementById("footer").innerHTML = html);
   </script>
 
 </body>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Akela Toolbox - Liste des jeux</title>
+  <meta name="description" content="Explorez la base de jeux Louveteaux d'Akela Toolbox.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Akela Toolbox - Liste des jeux" />
+  <meta property="og:description" content="Facilitez la préparation d'activités Louveteaux grâce à des jeux variés et collaboratifs." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://josephhumbert.github.io/AkelaToolbox/" />
+  <link rel="stylesheet" href="http://localhost:8000/site13/style.css">
+</head>
+
+<body>
+
+  <h1>🐺 Akela Toolbox</h1>
+
+  <!-- Navbar dynamique -->
+  <div id="navbar"></div>
+  <script>
+    fetch('http://localhost:8000/site13/includes/navbar.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('navbar').innerHTML = html;
+      });
+  </script>
+
+  <!-- Section visible -->
+  <section id="list" class="active">
+    <h2>📚 Liste des jeux Louveteaux</h2>
+    <input id="search" type="text" placeholder="🔍 Rechercher un jeu..." />
+
+    <table>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Durée</th>
+          <th>Matériel</th>
+          <th>Objectif</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </section>
+
+  <!-- Footer -->
+  <div id="footer"></div>
+  <script>
+    fetch("http://localhost:8000/site13/includes/footer.html")
+      .then(res => res.text())
+      .then(html => document.getElementById("footer").innerHTML = html);
+  </script>
+
+  <!-- Script principal -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Activer navigation dynamique
+      const navElements = document.querySelectorAll("[data-target]");
+      const sections = document.querySelectorAll("section");
+      navElements.forEach(el => {
+        el.addEventListener("click", () => {
+          const target = el.dataset.target;
+          sections.forEach(sec => {
+            sec.classList.toggle("active", sec.id === target);
+          });
+        });
+      });
+
+      const csvUrl = "https://docs.google.com/spreadsheets/d/10uIzf1QjEqgZn9OCvxaONA5va1T8xgT8p40eCXftSec/export?format=csv&gid=0";
+
+      function parseCSV(text) {
+        const lines = text.trim().split("\n");
+        const headers = lines.shift().split(",").map(h => h.trim());
+        return lines.map(line => {
+          const values = line.split(",").map(v => v.trim());
+          let obj = {};
+          headers.forEach((h, i) => {
+            obj[h] = values[i] || "";
+          });
+          return obj;
+        });
+      }
+
+      const tbody = document.getElementById("tbody");
+      const searchInput = document.getElementById("search");
+      let rows = [];
+
+      function render(data) {
+        tbody.innerHTML = "";
+        if (data.length === 0) {
+          tbody.innerHTML = "<tr><td colspan='5'>Aucun résultat trouvé.</td></tr>";
+          return;
+        }
+        for (const row of data) {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${row.Nom}</td>
+            <td>${row.Durée}</td>
+            <td>${row.Matériel}</td>
+            <td>${row.Objectif}</td>
+            <td>${row.Description}</td>
+          `;
+          tbody.appendChild(tr);
+        }
+      }
+
+      fetch(csvUrl)
+        .then(res => res.text())
+        .then(text => {
+          rows = parseCSV(text);
+          render(rows);
+        })
+        .catch(err => {
+          console.error("Erreur de chargement CSV :", err);
+          tbody.innerHTML = "<tr><td colspan='5'>Erreur de chargement des données.</td></tr>";
+        });
+
+      searchInput.addEventListener("input", () => {
+        const query = searchInput.value.toLowerCase();
+        const filtered = rows.filter(row =>
+          Object.values(row).some(val => val.toLowerCase().includes(query))
+        );
+        render(filtered);
+      });
+    });
+  </script>
+
+</body>
+</html>

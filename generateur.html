@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Akela Toolbox - Générateur</title>
+  <meta name="description" content="Générez un programme d’activités Louveteaux grâce à AkelaAI.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+  <link rel="stylesheet" href="http://localhost:8000/site13/style.css">
+</head>
+
+<body>
+  <h1>🐺 Akela Toolbox</h1>
+
+  <!-- Navbar -->
+  <div id="navbar"></div>
+  <script>
+    fetch('http://localhost:8000/site13/includes/navbar.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('navbar').innerHTML = html;
+      });
+  </script>
+
+  <!-- Section Générateur -->
+  <section id="generator" class="active">
+    <h2>💬 AkelaAI (Powered by Mistral)</h2>
+
+    <p>Décris ton week-end ou journée Louveteaux, et AkelaAI générera un programme adapté, à partir des jeux connus.</p>
+
+    <textarea id="userPrompt" placeholder="Ex : Génère un programme du samedi 10h au dimanche 16h, thème jungle, objectif cohésion, trajet 30 min" rows="6" cols="80" disabled></textarea><br>
+    <button id="sendBtn" disabled>⏳ Chargement...</button>
+
+    <h3>🧠 Réponse :</h3>
+    <pre id="program-output">Aucun programme généré pour l’instant.</pre>
+  </section>
+
+  <!-- Footer -->
+  <div id="footer"></div>
+  <script>
+    fetch("http://localhost:8000/site13/includes/footer.html")
+      .then(res => res.text())
+      .then(html => document.getElementById("footer").innerHTML = html);
+  </script>
+
+  <!-- Script principal -->
+  <script>
+    const csvUrl = "https://docs.google.com/spreadsheets/d/10uIzf1QjEqgZn9OCvxaONA5va1T8xgT8p40eCXftSec/export?format=csv&gid=0";
+    let games = [];
+
+    function parseCSV(text) {
+      const lines = text.trim().split("\n");
+      const headers = lines.shift().split(",").map(h => h.trim());
+      return lines.map(line => {
+        const values = line.split(",").map(v => v.trim());
+        let obj = {};
+        headers.forEach((h, i) => {
+          obj[h] = values[i] || "";
+        });
+        return obj;
+      });
+    }
+
+    fetch(csvUrl)
+      .then(res => res.text())
+      .then(text => {
+        games = parseCSV(text);
+        document.getElementById("sendBtn").disabled = false;
+        document.getElementById("sendBtn").textContent = "Envoyer à AkelaAI";
+        document.getElementById("userPrompt").disabled = false;
+      })
+      .catch(() => {
+        alert("❌ Erreur de chargement des jeux.");
+      });
+
+    const PREFIX_PROMPT = `Tu es un assistant scout expert dans l’organisation d’activités pour les Louveteaux.
+
+Ton rôle est de générer des programmes détaillés pour des week-ends ou journées scoutes, selon des paramètres donnés par un chef.
+
+Les jeux que tu inclus proviennent uniquement de la base de données fournie et les timings sont coherents.
+
+horaires imposes:
+- Montage des tentes en debut d'apres midi
+- 60 minutes de preparation du diner/de la veillee
+- Le dîner dure 60 minutes.
+- La veillée dure 90 minutes.
+- Le coucher est toujours à 21h00 maximum. Si une activité dépasse, elle est coupée.
+- Dodo de 21h00 à 8h15.
+- 08h15–08h30 : Réveil et dérouillage (15 min)
+- 08h30–09h15 : Petit déjeuner (45 min)
+- 09h15–09h45 : Désinstallation (30 min)
+- Rassemblement final 10 minutes a la fin du weekend
+- JAMAIS DE TEMPS LIBRE SAUF POUR LE SOMMEIL LA NUIT
+
+Tes réponses sont toujours très brèves (sauf pour les jeux dont tu fais une description copiee collee de la base de donnees) et en texte pur.
+
+Commence maintenant avec le prompt utilisateur suivant :
+`;
+
+    const API_KEY = "ySiMyJNfTK46OI3TYjDsu1wUqYGBvXeN"; // ⚠️ À remplacer côté serveur si public
+
+    async function sendPrompt() {
+      const userInput = document.getElementById("userPrompt").value.trim();
+      if (!userInput) {
+        alert("Veuillez entrer une description.");
+        return;
+      }
+
+      const output = document.getElementById("program-output");
+      output.textContent = "⏳ Génération en cours...";
+
+      try {
+        const fullPrompt = `${PREFIX_PROMPT}\nBase de données jeux :\n${JSON.stringify(games, null, 2)}\n\n${userInput}`;
+
+        const res = await fetch("https://api.mistral.ai/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${API_KEY}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            model: "mistral-medium",
+            messages: [{ role: "user", content: fullPrompt }],
+            temperature: 0.7
+          })
+        });
+
+        if (!res.ok) throw new Error("Erreur HTTP : " + res.status);
+        const data = await res.json();
+        const reply = data.choices?.[0]?.message?.content || "❌ Pas de réponse.";
+        output.textContent = reply;
+
+      } catch (err) {
+        console.error(err);
+        output.textContent = "❌ Erreur lors de la génération.";
+      }
+    }
+
+    document.getElementById("sendBtn").addEventListener("click", sendPrompt);
+  </script>
+
+</body>
+</html>

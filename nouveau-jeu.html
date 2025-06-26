@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Akela Toolbox - Soumettre un nouveau jeu</title>
+  <meta name="description" content="Soumettez un nouveau jeu Louveteaux pour enrichir la base collective.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+  <link rel="stylesheet" href="http://localhost:8000/site13/style.css">
+</head>
+
+<body>
+  <h1>🐺 Akela Toolbox</h1>
+
+  <!-- Navbar -->
+  <div id="navbar"></div>
+  <script>
+    fetch('http://localhost:8000/site13/includes/navbar.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('navbar').innerHTML = html;
+      });
+  </script>
+
+  <!-- Section Soumission -->
+  <section id="submit" class="active">
+    <h2>➕ Soumettre un nouveau jeu</h2>
+
+    <form id="submit-form">
+      <label for="new-name">Nom du jeu :</label><br />
+      <input type="text" id="new-name" name="new-name" required /><br />
+
+      <label for="new-duration">Durée (min) :</label><br />
+      <input type="text" id="new-duration" name="new-duration" required /><br />
+
+      <label for="new-material">Matériel :</label><br />
+      <input type="text" id="new-material" name="new-material" /><br />
+
+      <label for="new-goal">Objectif :</label><br />
+      <input type="text" id="new-goal" name="new-goal" /><br />
+
+      <label for="new-description">Description :</label><br />
+      <textarea id="new-description" name="new-description" rows="5" required></textarea><br />
+
+      <button type="submit">Envoyer</button>
+    </form>
+
+    <p id="submit-result"></p>
+  </section>
+
+  <!-- Footer -->
+  <div id="footer"></div>
+  <script>
+    fetch("http://localhost:8000/site13/includes/footer.html")
+      .then(res => res.text())
+      .then(html => document.getElementById("footer").innerHTML = html);
+  </script>
+
+  <!-- Script de soumission -->
+  <script>
+    const submitForm = document.getElementById("submit-form");
+    const submitResult = document.getElementById("submit-result");
+
+    submitForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const data = {
+        Nom: submitForm["new-name"].value.trim(),
+        Durée: submitForm["new-duration"].value.trim(),
+        Matériel: submitForm["new-material"].value.trim(),
+        Objectif: submitForm["new-goal"].value.trim(),
+        Description: submitForm["new-description"].value.trim(),
+      };
+
+      if (!data.Nom || !data.Durée || !data.Description) {
+        submitResult.textContent = "❌ Veuillez remplir les champs obligatoires.";
+        submitResult.style.color = "red";
+        return;
+      }
+
+      try {
+        submitResult.textContent = "⏳ Envoi en cours...";
+        submitResult.style.color = "black";
+
+        const response = await fetch("https://sheetdb.io/api/v1/dtoqbws6n5hif", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ data }),
+        });
+
+        if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
+
+        submitResult.textContent = "✅ Merci ! Jeu soumis avec succès.";
+        submitResult.style.color = "green";
+        submitForm.reset();
+
+        // Optionnel : désactiver formulaire puis reload
+        submitForm.querySelectorAll("input, textarea, button").forEach(el => el.disabled = true);
+        setTimeout(() => location.reload(), 2000);
+
+      } catch (err) {
+        submitResult.textContent = "❌ Erreur lors de l’envoi : " + err.message;
+        submitResult.style.color = "red";
+      }
+    });
+  </script>
+</body>
+</html>
