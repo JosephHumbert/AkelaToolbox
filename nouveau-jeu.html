@@ -6,7 +6,7 @@
   <meta name="description" content="Soumettez un nouveau jeu Louveteaux pour enrichir la base collective.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="index, follow">
-  <link rel="stylesheet" href="https://josephhumbert.github.io/AkelaToolbox/includes/style.css">
+  <link rel="stylesheet" href="https://josephhumbert.github.io/AkelaToolbox/style.css">
 </head>
 
 <body>
@@ -15,7 +15,7 @@
   <!-- Navbar -->
   <div id="navbar"></div>
   <script>
-    fetch('https://josephhumbert.github.io/AkelaToolbox/navbar.html')
+    fetch('https://josephhumbert.github.io/AkelaToolbox/includes/navbar.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('navbar').innerHTML = html;
