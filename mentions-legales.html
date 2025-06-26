@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Mentions légales - Akela Toolbox</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="https://josephhumbert.github.io/AkelaToolbox/includes/style.css">
+  <link rel="stylesheet" href="https://josephhumbert.github.io/AkelaToolbox/style.css">
 </head>
 <body>
 
@@ -13,7 +13,7 @@
   <!-- navbar -->
   <div id="navbar"></div>
   <script>
-    fetch('https://josephhumbert.github.io/AkelaToolbox/navbar.html')
+    fetch('https://josephhumbert.github.io/AkelaToolbox/includes/navbar.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('navbar').innerHTML = html;
