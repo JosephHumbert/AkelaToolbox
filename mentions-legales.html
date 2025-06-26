@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Mentions légales - Akela Toolbox</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="http://localhost:8000/site13/style.css">
+  <link rel="stylesheet" href="https://josephhumbert.github.io/AkelaToolbox/style.css">
 </head>
 <body>
 
@@ -13,7 +13,7 @@
   <!-- navbar -->
   <div id="navbar"></div>
   <script>
-    fetch('http://localhost:8000/site13/includes/navbar.html')
+    fetch('https://josephhumbert.github.io/AkelaToolbox/navbar.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('navbar').innerHTML = html;
@@ -28,7 +28,7 @@
     <p>
       Ce site est édité par :<br />
       Bison T., Ière Saint Martin de Bréthencourt<br />
-      Contact : via le <a href="http://localhost:8000/site13/contact.html">formulaire de contact</a>
+      Contact : via le <a href="https://josephhumbert.github.io/AkelaToolbox/contact.html">formulaire de contact</a>
     </p>
 
     <h3>Hébergement</h3>
@@ -65,7 +65,7 @@
   <!-- footer -->
   <div id="footer"></div>
   <script>
-    fetch("http://localhost:8000/site13/includes/footer.html")
+    fetch("https://josephhumbert.github.io/AkelaToolbox/footer.html")
       .then(res => res.text())
       .then(html => document.getElementById("footer").innerHTML = html);
   </script>
