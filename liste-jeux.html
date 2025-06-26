@@ -10,7 +10,7 @@
   <meta property="og:description" content="Facilitez la préparation d'activités Louveteaux grâce à des jeux variés et collaboratifs." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://josephhumbert.github.io/AkelaToolbox/" />
-  <link rel="stylesheet" href="http://localhost:8000/site13/style.css">
+  <link rel="stylesheet" href="https://josephhumbert.github.io/AkelaToolbox/style.css">
 </head>
 
 <body>
@@ -20,7 +20,7 @@
   <!-- Navbar dynamique -->
   <div id="navbar"></div>
   <script>
-    fetch('http://localhost:8000/site13/includes/navbar.html')
+    fetch('https://josephhumbert.github.io/AkelaToolbox/navbar.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('navbar').innerHTML = html;
@@ -49,7 +49,7 @@
   <!-- Footer -->
   <div id="footer"></div>
   <script>
-    fetch("http://localhost:8000/site13/includes/footer.html")
+    fetch("https://josephhumbert.github.io/AkelaToolbox/footer.html")
       .then(res => res.text())
       .then(html => document.getElementById("footer").innerHTML = html);
   </script>
