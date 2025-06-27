@@ -1,4 +1,10 @@
-/* --- GLOBAL --- */
+/* === GLOBAL === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   max-width: 900px;
@@ -6,60 +12,36 @@ body {
   padding: 2rem;
   background: #0a140a;
   color: #a0ffa0;
-  box-sizing: border-box;
-}
-*, *::before, *::after {
-  box-sizing: inherit;
+  line-height: 1.6;
 }
 
-#feedback {
-  margin-top: 1em;
-  font-weight: bold;
-  color: #444;
-}
-
-/* --- HEADINGS & TEXT --- */
+/* === HEADINGS & TEXT === */
 h1, h2 {
   color: #76ff4d;
   text-shadow: 0 0 8px #76ff4daa;
   font-weight: 700;
   font-size: clamp(1.5rem, 4vw, 2.5rem);
+  margin-top: 0;
 }
 p {
   margin-bottom: 1rem;
-  line-height: 1.6;
 }
 a {
   color: #39ff14;
   text-decoration: underline;
 }
-
-/* --- BACK BUTTON --- */
-.back-btn {
-  display: inline-block;
-  margin-bottom: 2rem;
-  background: transparent;
-  border: 2px solid #39ff14;
-  color: #39ff14;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-weight: 600;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-.back-btn:hover {
-  background-color: #2a621f;
-  color: #d0ffd0;
+a:hover,
+a:focus {
+  color: #8fff66;
 }
 
-/* --- NAVIGATION --- */
+/* === NAVIGATION === */
 nav {
-  margin-bottom: 1rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 nav button {
   flex: 1 1 120px;
@@ -67,13 +49,13 @@ nav button {
   border: 2px solid #39ff14;
   color: #39ff14;
   padding: 0.6rem 0.8rem;
-  cursor: pointer;
   border-radius: 12px;
   font-weight: 700;
   font-size: 1rem;
-  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
   box-shadow: 0 0 10px #39ff14aa;
   text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
 nav button:hover,
 nav button:focus {
@@ -83,7 +65,28 @@ nav button:focus {
   outline: none;
 }
 
-/* --- SECTIONS --- */
+/* === BACK BUTTON === */
+.back-btn {
+  display: inline-block;
+  margin-bottom: 2rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid #39ff14;
+  color: #39ff14;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  background: transparent;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.back-btn:hover,
+.back-btn:focus {
+  background-color: #2a621f;
+  color: #d0ffd0;
+  outline: none;
+}
+
+/* === SECTIONS === */
 section {
   display: none;
   background: #121a12;
@@ -101,7 +104,7 @@ section.active {
   transform: translateY(0);
 }
 
-/* --- TABLES --- */
+/* === TABLES === */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -114,12 +117,10 @@ table {
 th, td {
   padding: 0.75rem 1rem;
   border-bottom: 1px solid #39ff1455;
-  text-align: left;
+  background: #0f1a0f;
   color: #c0ffc0;
   font-weight: 500;
-  background: #0f1a0f;
-  /* white-space: nowrap; ← supprime cette ligne */
-  word-break: break-word; /* permet de couper les longs mots */
+  word-break: break-word;
 }
 th {
   background: #203820;
@@ -131,7 +132,7 @@ tbody tr:hover {
   background-color: #2a621f88;
 }
 
-/* --- FORMS --- */
+/* === FORMS === */
 label {
   display: block;
   margin-top: 1rem;
@@ -142,44 +143,49 @@ input, select, textarea {
   margin-bottom: 1rem;
   padding: 0.65rem 0.8rem;
   font-size: 1rem;
+  font-family: inherit;
+  font-weight: 600;
   border-radius: 10px;
   border: 1.5px solid #39ff14;
   background: #162216;
   color: #a0ffa0;
   box-shadow: inset 0 1px 5px rgba(0,0,0,0.6);
-  font-weight: 600;
-  font-family: inherit;
 }
 input::placeholder,
 textarea::placeholder {
   color: #4d944d;
 }
-input:focus, select:focus, textarea:focus {
+input:focus,
+select:focus,
+textarea:focus {
   border-color: #76ff4d;
   box-shadow: 0 0 8px #76ff4d99;
   outline: none;
 }
 
-/* --- BUTTONS (Unifié) --- */
-button, .submit-btn, #sendBtn {
+/* === BUTTONS (Génériques) === */
+button,
+.submit-btn,
+#sendBtn {
   width: 100%;
   max-width: 240px;
   padding: 0.8rem 1.5rem;
-  height: auto;
   background-color: #2ea42e;
   color: #d0ffd0;
   border: 1.5px solid #39ff14;
-  box-shadow: 0 0 10px #39ff14aa;
   border-radius: 12px;
-  cursor: pointer;
+  box-shadow: 0 0 10px #39ff14aa;
   font-weight: 700;
   font-size: 1rem;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
-button:hover, .submit-btn:hover, #sendBtn:hover {
+button:hover,
+.submit-btn:hover,
+#sendBtn:hover {
   background-color: #39ff14;
-  box-shadow: 0 0 15px #39ff14dd;
   color: #0a0f0a;
+  box-shadow: 0 0 15px #39ff14dd;
 }
 #sendBtn:disabled {
   background-color: #0c150c;
@@ -189,20 +195,41 @@ button:hover, .submit-btn:hover, #sendBtn:hover {
   box-shadow: none;
 }
 
-/* --- RESULTS / OUTPUT --- */
-#program-output, #submit-result, #response, #confirmation {
-  white-space: pre-wrap;
+/* === FEEDBACK / MESSAGES === */
+#program-output,
+#response,
+#confirmation {
   background: #162216;
   padding: 1rem;
   border-radius: 12px;
   color: #a0ffa0;
   box-shadow: inset 0 0 10px #39ff1488;
   min-height: 150px;
+  white-space: pre-wrap;
   font-family: "Segoe UI Mono", Consolas, monospace;
   overflow-x: auto;
 }
 
-/* --- LOADING --- */
+#submit-result {
+  font-style: italic;
+  color: #a0ffa0;
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  display: block;
+  background: none;
+  padding: 0;
+  box-shadow: none;
+  border: none;
+}
+
+/* === OTHER FEEDBACK === */
+#feedback {
+  margin-top: 1em;
+  font-weight: bold;
+  color: #ccc;
+}
+
+/* === LOADING INDICATOR === */
 #loading {
   margin-top: 1rem;
   color: #39ff14;
@@ -218,46 +245,33 @@ button:hover, .submit-btn:hover, #sendBtn:hover {
   50% { opacity: 1; }
 }
 
-/* --- RESPONSIVE --- */
-* {
-  box-sizing: border-box;
-}
-
+/* === RESPONSIVE DESIGN === */
 @media (max-width: 768px) {
   body {
     padding: 1rem;
     max-width: 100%;
   }
-
   nav {
     flex-direction: column;
     align-items: stretch;
   }
-
   nav button,
-  button, .submit-btn, #sendBtn {
-    width: 100%;
+  button,
+  .submit-btn,
+  #sendBtn {
     max-width: none;
-  }
-
-  form {
     width: 100%;
-    margin: 0;
   }
-
   input, select, textarea {
-    width: 100%;
     font-size: 1rem;
   }
-
   th, td {
     font-size: 0.9rem;
     padding: 0.5rem;
   }
-
   h1, h2 {
-    font-size: 1.6rem;
     text-align: center;
+    font-size: 1.6rem;
   }
 }
 
@@ -265,7 +279,6 @@ button:hover, .submit-btn:hover, #sendBtn:hover {
   input, select, textarea {
     font-size: 0.85rem;
   }
-
   h1, h2 {
     font-size: 1.4rem;
   }
