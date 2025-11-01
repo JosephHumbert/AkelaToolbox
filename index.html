@@ -6,12 +6,32 @@
   <meta name="description" content="Akela Toolbox - Générateur d'activités et gestion collaborative de jeux Louveteaux.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#39ff14">
+  <link rel="canonical" href="https://josephhumbert.github.io/AkelaToolbox/index.html">
   <meta property="og:title" content="Akela Toolbox" />
   <meta property="og:description" content="Facilitez la préparation d'activités Louveteaux grâce à des outils intelligents et une base collaborative de jeux." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://josephhumbert.github.io/AkelaToolbox/" />
+  <meta property="og:url" content="https://josephhumbert.github.io/AkelaToolbox/index.html" />
+  <meta property="og:image" content="https://josephhumbert.github.io/AkelaToolbox/assets/social-card.svg" />
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Akela Toolbox">
+  <meta name="twitter:description" content="Facilitez la préparation d'activités Louveteaux grâce à des outils intelligents et une base collaborative de jeux.">
+  <meta name="twitter:image" content="https://josephhumbert.github.io/AkelaToolbox/assets/social-card.svg">
   <link rel="stylesheet" href="style.css">
   <!-- <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Special+Elite&display=swap" rel="stylesheet">-->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Akela Toolbox",
+      "url": "https://josephhumbert.github.io/AkelaToolbox/index.html",
+      "logo": "https://josephhumbert.github.io/AkelaToolbox/assets/social-card.svg",
+      "sameAs": [
+        "https://github.com/JosephHumbert/AkelaToolbox"
+      ],
+      "description": "Outils collaboratifs pour préparer des activités et jeux Louveteaux."
+    }
+  </script>
 </head>
 
 <body>
@@ -20,17 +40,35 @@
 
   <!-- navbar -->
   <div id="navbar"></div>
+  <noscript>
+    <nav>
+      <a href="index.html" class="nav-link">🏠 Accueil</a>
+      <a href="liste-jeux.html" class="nav-link">📚 Liste jeux</a>
+      <a href="generateur.html" class="nav-link">🛠 AkelaAI</a>
+      <a href="nouveau-jeu.html" class="nav-link">➕ Nouveau jeu</a>
+      <a href="contact.html" class="nav-link">📬 Contact</a>
+    </nav>
+  </noscript>
   <script>
     fetch('includes/navbar.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('navbar').innerHTML = html;
+      })
+      .catch(() => {
+        const fallback = document.querySelector('noscript nav');
+        if (fallback) {
+          document.getElementById('navbar').innerHTML = fallback.outerHTML;
+        }
       });
   </script>
 
   <!-- Accueil -->
   <section id="home" class="active">
     <h2>🐾 Bienvenue sur Akela Toolbox !</h2>
+    <p class="intro">
+      Akela Toolbox réunit en un seul endroit les jeux Louveteaux, ressources d’animation et outils numériques indispensables pour organiser un week-end ou une réunion de meute. Pensé par et pour les chefs scouts, le site propose une navigation rapide, des fiches détaillées et des suggestions d’activités prêtes à l’emploi.
+    </p>
     <p>
       Ce site est un outil collaboratif pensé pour les chefs Louveteaux. Il facilite la préparation, la création et le partage de jeux d'animation.
     </p>

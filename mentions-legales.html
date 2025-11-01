@@ -3,7 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <title>Mentions légales - Akela Toolbox</title>
+  <meta name="description" content="Mentions légales et informations sur l'hébergement, les données et la propriété intellectuelle d'Akela Toolbox.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#39ff14">
+  <link rel="canonical" href="https://josephhumbert.github.io/AkelaToolbox/mentions-legales.html">
+  <meta property="og:title" content="Mentions légales - Akela Toolbox" />
+  <meta property="og:description" content="Découvrez les informations légales, contact et hébergement du projet Akela Toolbox." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://josephhumbert.github.io/AkelaToolbox/mentions-legales.html" />
+  <meta property="og:image" content="https://josephhumbert.github.io/AkelaToolbox/assets/social-card.svg" />
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mentions légales - Akela Toolbox">
+  <meta name="twitter:description" content="Découvrez les informations légales, contact et hébergement du projet Akela Toolbox.">
+  <meta name="twitter:image" content="https://josephhumbert.github.io/AkelaToolbox/assets/social-card.svg">
   <link rel="stylesheet" href="https://josephhumbert.github.io/AkelaToolbox/style.css">
 </head>
 <body>
@@ -12,11 +25,26 @@
 
   <!-- navbar -->
   <div id="navbar"></div>
+  <noscript>
+    <nav>
+      <a href="index.html" class="nav-link">🏠 Accueil</a>
+      <a href="liste-jeux.html" class="nav-link">📚 Liste jeux</a>
+      <a href="generateur.html" class="nav-link">🛠 AkelaAI</a>
+      <a href="nouveau-jeu.html" class="nav-link">➕ Nouveau jeu</a>
+      <a href="contact.html" class="nav-link">📬 Contact</a>
+    </nav>
+  </noscript>
   <script>
     fetch('https://josephhumbert.github.io/AkelaToolbox/includes/navbar.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('navbar').innerHTML = html;
+      })
+      .catch(() => {
+        const fallback = document.querySelector('noscript nav');
+        if (fallback) {
+          document.getElementById('navbar').innerHTML = fallback.outerHTML;
+        }
       });
   </script>
 

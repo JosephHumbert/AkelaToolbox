@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1f0a" />
+      <stop offset="100%" stop-color="#3fd45d" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g transform="translate(80,120)">
+    <text x="0" y="120" font-family="'Segoe UI', sans-serif" font-size="96" fill="#ffffff" font-weight="700">Akela Toolbox</text>
+    <text x="0" y="220" font-family="'Segoe UI', sans-serif" font-size="48" fill="#e8ffe8">Jeux &amp; programmes pour meutes Louveteaux</text>
+    <text x="0" y="310" font-family="'Segoe UI', sans-serif" font-size="32" fill="#ffffff">• Générateur d'activités intelligent</text>
+    <text x="0" y="370" font-family="'Segoe UI', sans-serif" font-size="32" fill="#ffffff">• Base collaborative de jeux</text>
+    <text x="0" y="430" font-family="'Segoe UI', sans-serif" font-size="32" fill="#ffffff">• Ressources gratuites pour chefs de meute</text>
+  </g>
+</svg>

@@ -30,6 +30,12 @@ h1, h2 {
 p {
   margin-bottom: 1rem;
 }
+.intro {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #3b2a1a;
+  margin-bottom: 1.5rem;
+}
 a {
   color: #5c3d18;
   text-decoration: underline;
@@ -47,7 +53,7 @@ nav {
   gap: 0.5rem;
   margin-bottom: 1rem;
 }
-nav button {
+nav .nav-link {
   flex: 1 1 120px;
   background: #ede0c3;
   border: 2px dashed #5b3e1d;
@@ -56,15 +62,23 @@ nav button {
   border-radius: 12px;
   font-weight: 700;
   font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
   transition: all 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+  gap: 0.35rem;
 }
-nav button:hover,
-nav button:focus {
+nav .nav-link:hover,
+nav .nav-link:focus,
+nav .nav-link:active {
   background-color: #d6c3a1;
   box-shadow: 3px 3px 8px rgba(0,0,0,0.3);
   outline: none;
+  color: #27180c;
 }
 
 /* === BACK BUTTON === */
@@ -253,7 +267,7 @@ button:hover,
     flex-direction: column;
     align-items: stretch;
   }
-  nav button,
+  nav .nav-link,
   button,
   .submit-btn,
   #sendBtn {
