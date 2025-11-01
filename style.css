@@ -267,6 +267,44 @@ table td:nth-child(5) {
   width: 34ch;
 }
 
+.table-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.table-controls input[type="text"] {
+  flex: 2 1 280px;
+  margin-bottom: 0;
+}
+
+.sort-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.sort-label select {
+  padding: 0.6rem 0.9rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(31, 42, 45, 0.12);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--text-main);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.sort-label select:hover,
+.sort-label select:focus {
+  border-color: rgba(26, 128, 74, 0.4);
+  box-shadow: 0 0 0 3px rgba(26, 128, 74, 0.1);
+}
+
 th {
   background: rgba(26, 128, 74, 0.08);
   color: var(--primary-dark);
@@ -481,6 +519,19 @@ textarea:focus {
     padding: 0.7rem;
   }
 
+  .table-controls {
+    gap: 0.8rem;
+  }
+
+  .sort-label {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .sort-label select {
+    width: 100%;
+  }
+
   h1,
   h2 {
     text-align: center;
@@ -507,4 +558,17 @@ textarea:focus {
     font-size: 1.35rem;
   }
 
+  .table-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sort-label {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sort-label select {
+    width: 100%;
+  }
 }

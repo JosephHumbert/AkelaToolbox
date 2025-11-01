@@ -66,7 +66,19 @@
         <p class="intro">
           Parcourez une bibliothèque constamment enrichie de jeux Louveteaux triés par objectifs éducatifs, durée et matériel. Utilisez la recherche pour filtrer immédiatement selon vos besoins et trouver l’activité idéale avant votre prochaine réunion.
         </p>
-        <input id="search" type="text" placeholder="🔍 Rechercher un jeu..." />
+        <div class="table-controls">
+          <input id="search" type="text" placeholder="🔍 Rechercher un jeu..." />
+          <label for="sort" class="sort-label">
+            Trier par
+            <select id="sort">
+              <option value="default">Aucun tri</option>
+              <option value="duration-asc">Durée (croissante)</option>
+              <option value="duration-desc">Durée (décroissante)</option>
+              <option value="date-desc">Date d’ajout (récent → ancien)</option>
+              <option value="date-asc">Date d’ajout (ancien → récent)</option>
+            </select>
+          </label>
+        </div>
 
         <table>
           <thead>
@@ -124,7 +136,11 @@
 
       const tbody = document.getElementById("tbody");
       const searchInput = document.getElementById("search");
+      const sortSelect = document.getElementById("sort");
+      const dateFields = ["Date ajout", "Date", "Date d'ajout", "Ajout"];
       let rows = [];
+      let searchQuery = "";
+      let currentSort = "default";
 
       function render(data) {
         tbody.innerHTML = "";
@@ -145,11 +161,86 @@
         }
       }
 
+      function parseDuration(value) {
+        if (!value) return Number.POSITIVE_INFINITY;
+        const normalised = value.toString().trim().toLowerCase();
+        const hoursMatch = normalised.match(/(\d+)\s*h/);
+        const minutesMatch = normalised.match(/(\d+)(?=\s*(?:min|mn))/);
+        let total = 0;
+        if (hoursMatch) {
+          total += parseInt(hoursMatch[1], 10) * 60;
+        }
+        if (minutesMatch) {
+          total += parseInt(minutesMatch[1], 10);
+        }
+        if (!hoursMatch && !minutesMatch) {
+          const numeric = parseFloat(normalised.replace(/[^0-9.,]/g, '').replace(',', '.'));
+          if (!Number.isNaN(numeric)) {
+            total += numeric;
+          }
+        }
+        return total || Number.POSITIVE_INFINITY;
+      }
+
+      function parseDate(value) {
+        if (!value) return Number.NEGATIVE_INFINITY;
+        const trimmed = value.toString().trim();
+        const timestamp = Date.parse(trimmed);
+        if (!Number.isNaN(timestamp)) {
+          return timestamp;
+        }
+        const europeanMatch = trimmed.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+        if (europeanMatch) {
+          const day = parseInt(europeanMatch[1], 10);
+          const month = parseInt(europeanMatch[2], 10) - 1;
+          let year = parseInt(europeanMatch[3], 10);
+          if (year < 100) {
+            year += year >= 70 ? 1900 : 2000;
+          }
+          return new Date(year, month, day).getTime();
+        }
+        return Number.NEGATIVE_INFINITY;
+      }
+
+      function getDateValue(row) {
+        for (const field of dateFields) {
+          if (row[field]) {
+            const parsed = parseDate(row[field]);
+            if (parsed !== Number.NEGATIVE_INFINITY) {
+              return parsed;
+            }
+          }
+        }
+        return Number.NEGATIVE_INFINITY;
+      }
+
+      function applyFiltersAndRender() {
+        let filtered = rows.filter(row => {
+          if (!searchQuery) return true;
+          return Object.values(row).some(val =>
+            val && val.toString().toLowerCase().includes(searchQuery)
+          );
+        });
+
+        const sorter = {
+          'duration-asc': (a, b) => parseDuration(a.Durée) - parseDuration(b.Durée),
+          'duration-desc': (a, b) => parseDuration(b.Durée) - parseDuration(a.Durée),
+          'date-asc': (a, b) => getDateValue(a) - getDateValue(b),
+          'date-desc': (a, b) => getDateValue(b) - getDateValue(a)
+        }[currentSort];
+
+        if (sorter) {
+          filtered = [...filtered].sort(sorter);
+        }
+
+        render(filtered);
+      }
+
       fetch(csvUrl)
         .then(res => res.text())
         .then(text => {
           rows = parseCSV(text);
-          render(rows);
+          applyFiltersAndRender();
         })
         .catch(err => {
           console.error("Erreur de chargement CSV :", err);
@@ -157,11 +248,13 @@
         });
 
       searchInput.addEventListener("input", () => {
-        const query = searchInput.value.toLowerCase();
-        const filtered = rows.filter(row =>
-          Object.values(row).some(val => val.toLowerCase().includes(query))
-        );
-        render(filtered);
+        searchQuery = searchInput.value.toLowerCase();
+        applyFiltersAndRender();
+      });
+
+      sortSelect.addEventListener("change", () => {
+        currentSort = sortSelect.value;
+        applyFiltersAndRender();
       });
     });
   </script>
