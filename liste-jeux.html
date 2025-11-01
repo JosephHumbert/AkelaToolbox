@@ -17,7 +17,7 @@
   <meta name="twitter:title" content="Akela Toolbox - Liste des jeux">
   <meta name="twitter:description" content="Filtrez rapidement les jeux Louveteaux pour composer vos réunions et sorties de meute.">
   <meta name="twitter:image" content="https://josephhumbert.github.io/AkelaToolbox/assets/social-card.svg">
-  <link rel="stylesheet" href="https://josephhumbert.github.io/AkelaToolbox/style.css">
+  <link rel="stylesheet" href="style.css">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -31,62 +31,66 @@
 
 <body>
 
-  <h1>🐺 Akela Toolbox</h1>
+  <div class="page-shell">
+    <h1>🐺 Akela Toolbox</h1>
 
-  <!-- Navbar dynamique -->
-  <div id="navbar"></div>
-  <noscript>
-    <nav>
-      <a href="index.html" class="nav-link">🏠 Accueil</a>
-      <a href="liste-jeux.html" class="nav-link">📚 Liste jeux</a>
-      <a href="generateur.html" class="nav-link">🛠 AkelaAI</a>
-      <a href="nouveau-jeu.html" class="nav-link">➕ Nouveau jeu</a>
-      <a href="contact.html" class="nav-link">📬 Contact</a>
-    </nav>
-  </noscript>
-  <script>
-    fetch('https://josephhumbert.github.io/AkelaToolbox/includes/navbar.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('navbar').innerHTML = html;
-      })
-      .catch(() => {
-        const fallback = document.querySelector('noscript nav');
-        if (fallback) {
-          document.getElementById('navbar').innerHTML = fallback.outerHTML;
-        }
-      });
-  </script>
+    <!-- Navbar dynamique -->
+    <div id="navbar"></div>
+    <noscript>
+      <nav>
+        <a href="index.html" class="nav-link">🏠 Accueil</a>
+        <a href="liste-jeux.html" class="nav-link">📚 Liste jeux</a>
+        <a href="generateur.html" class="nav-link">🛠 AkelaAI</a>
+        <a href="nouveau-jeu.html" class="nav-link">➕ Nouveau jeu</a>
+        <a href="contact.html" class="nav-link">📬 Contact</a>
+      </nav>
+    </noscript>
+    <script>
+      fetch('includes/navbar.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('navbar').innerHTML = html;
+        })
+        .catch(() => {
+          const fallback = document.querySelector('noscript nav');
+          if (fallback) {
+            document.getElementById('navbar').innerHTML = fallback.outerHTML;
+          }
+        });
+    </script>
 
-  <!-- Section visible -->
-  <section id="list" class="active">
-    <h2>📚 Liste des jeux Louveteaux</h2>
-    <p class="intro">
-      Parcourez une bibliothèque constamment enrichie de jeux Louveteaux triés par objectifs éducatifs, durée et matériel. Utilisez la recherche pour filtrer immédiatement selon vos besoins et trouver l’activité idéale avant votre prochaine réunion.
-    </p>
-    <input id="search" type="text" placeholder="🔍 Rechercher un jeu..." />
+    <main>
+      <!-- Section visible -->
+      <section id="list" class="active">
+        <h2>📚 Liste des jeux Louveteaux</h2>
+        <p class="intro">
+          Parcourez une bibliothèque constamment enrichie de jeux Louveteaux triés par objectifs éducatifs, durée et matériel. Utilisez la recherche pour filtrer immédiatement selon vos besoins et trouver l’activité idéale avant votre prochaine réunion.
+        </p>
+        <input id="search" type="text" placeholder="🔍 Rechercher un jeu..." />
 
-    <table>
-      <thead>
-        <tr>
-          <th>Nom</th>
-          <th>Durée</th>
-          <th>Matériel</th>
-          <th>Objectif</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody id="tbody"></tbody>
-    </table>
-  </section>
+        <table>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Durée</th>
+              <th>Matériel</th>
+              <th>Objectif</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </section>
+    </main>
 
-  <!-- Footer -->
-  <div id="footer"></div>
-  <script>
-    fetch("https://josephhumbert.github.io/AkelaToolbox/includes/footer.html")
-      .then(res => res.text())
-      .then(html => document.getElementById("footer").innerHTML = html);
-  </script>
+    <!-- Footer -->
+    <div id="footer"></div>
+    <script>
+      fetch("includes/footer.html")
+        .then(res => res.text())
+        .then(html => document.getElementById("footer").innerHTML = html);
+    </script>
+  </div>
 
   <!-- Script principal -->
   <script>

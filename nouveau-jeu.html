@@ -30,71 +30,75 @@
 </head>
 
 <body>
-  <h1>🐺 Akela Toolbox</h1>
+  <div class="page-shell">
+    <h1>🐺 Akela Toolbox</h1>
 
-  <!-- Navbar -->
-  <div id="navbar"></div>
-  <noscript>
-    <nav>
-      <a href="index.html" class="nav-link">🏠 Accueil</a>
-      <a href="liste-jeux.html" class="nav-link">📚 Liste jeux</a>
-      <a href="generateur.html" class="nav-link">🛠 AkelaAI</a>
-      <a href="nouveau-jeu.html" class="nav-link">➕ Nouveau jeu</a>
-      <a href="contact.html" class="nav-link">📬 Contact</a>
-    </nav>
-  </noscript>
-  <script>
-    fetch('includes/navbar.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('navbar').innerHTML = html;
-      })
-      .catch(() => {
-        const fallback = document.querySelector('noscript nav');
-        if (fallback) {
-          document.getElementById('navbar').innerHTML = fallback.outerHTML;
-        }
-      });
-  </script>
+    <!-- Navbar -->
+    <div id="navbar"></div>
+    <noscript>
+      <nav>
+        <a href="index.html" class="nav-link">🏠 Accueil</a>
+        <a href="liste-jeux.html" class="nav-link">📚 Liste jeux</a>
+        <a href="generateur.html" class="nav-link">🛠 AkelaAI</a>
+        <a href="nouveau-jeu.html" class="nav-link">➕ Nouveau jeu</a>
+        <a href="contact.html" class="nav-link">📬 Contact</a>
+      </nav>
+    </noscript>
+    <script>
+      fetch('includes/navbar.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('navbar').innerHTML = html;
+        })
+        .catch(() => {
+          const fallback = document.querySelector('noscript nav');
+          if (fallback) {
+            document.getElementById('navbar').innerHTML = fallback.outerHTML;
+          }
+        });
+    </script>
 
-  <!-- Section Soumission -->
-  <section id="submit" class="active">
-    <h2>➕ Soumettre un nouveau jeu</h2>
+    <main>
+      <!-- Section Soumission -->
+      <section id="submit" class="active">
+        <h2>➕ Soumettre un nouveau jeu</h2>
 
-    <p class="intro">
-      Aidez les chefs Louveteaux à varier leurs animations en partageant un jeu que vous avez testé ou adoré. Chaque fiche validée enrichit la base commune et facilite la vie des maîtrises en quête d’idées fraîches.
-    </p>
+        <p class="intro">
+          Aidez les chefs Louveteaux à varier leurs animations en partageant un jeu que vous avez testé ou adoré. Chaque fiche validée enrichit la base commune et facilite la vie des maîtrises en quête d’idées fraîches.
+        </p>
 
-    <form id="submit-form">
-      <label for="new-name">Nom du jeu :</label>
-      <input type="text" id="new-name" name="new-name" required />
+        <form id="submit-form">
+          <label for="new-name">Nom du jeu :</label>
+          <input type="text" id="new-name" name="new-name" required />
 
-      <label for="new-duration">Durée (min) :</label>
-      <input type="number" id="new-duration" name="new-duration" required min="1" step="1" />
+          <label for="new-duration">Durée (min) :</label>
+          <input type="number" id="new-duration" name="new-duration" required min="1" step="1" />
 
-      <label for="new-material">Matériel :</label>
-      <input type="text" id="new-material" name="new-material" />
+          <label for="new-material">Matériel :</label>
+          <input type="text" id="new-material" name="new-material" />
 
-      <label for="new-goal">Objectif :</label>
-      <input type="text" id="new-goal" name="new-goal" />
+          <label for="new-goal">Objectif :</label>
+          <input type="text" id="new-goal" name="new-goal" />
 
-      <label for="new-description">Description :</label>
-      <textarea id="new-description" name="new-description" rows="5" required></textarea>
+          <label for="new-description">Description :</label>
+          <textarea id="new-description" name="new-description" rows="5" required></textarea>
 
-      <button type="submit">Envoyer</button>
-    </form>
+          <button type="submit">Envoyer</button>
+        </form>
 
-    <p id="submit-result">💬 Remplis le formulaire pour proposer un jeu.</p>
+        <p id="submit-result">💬 Remplis le formulaire pour proposer un jeu.</p>
 
-  </section>
+      </section>
+    </main>
 
-  <!-- Footer -->
-  <div id="footer"></div>
-  <script>
-    fetch("includes/footer.html")
-      .then(res => res.text())
-      .then(html => document.getElementById("footer").innerHTML = html);
-  </script>
+    <!-- Footer -->
+    <div id="footer"></div>
+    <script>
+      fetch("includes/footer.html")
+        .then(res => res.text())
+        .then(html => document.getElementById("footer").innerHTML = html);
+    </script>
+  </div>
 
   <!-- Script de soumission -->
   <script>

@@ -36,72 +36,76 @@
 
 <body>
 
-  <h1>🐺 Akela Toolbox</h1>
+  <div class="page-shell">
+    <h1>🐺 Akela Toolbox</h1>
 
-  <!-- navbar -->
-  <div id="navbar"></div>
-  <noscript>
-    <nav>
-      <a href="index.html" class="nav-link">🏠 Accueil</a>
-      <a href="liste-jeux.html" class="nav-link">📚 Liste jeux</a>
-      <a href="generateur.html" class="nav-link">🛠 AkelaAI</a>
-      <a href="nouveau-jeu.html" class="nav-link">➕ Nouveau jeu</a>
-      <a href="contact.html" class="nav-link">📬 Contact</a>
-    </nav>
-  </noscript>
-  <script>
-    fetch('includes/navbar.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('navbar').innerHTML = html;
-      })
-      .catch(() => {
-        const fallback = document.querySelector('noscript nav');
-        if (fallback) {
-          document.getElementById('navbar').innerHTML = fallback.outerHTML;
-        }
-      });
-  </script>
+    <!-- navbar -->
+    <div id="navbar"></div>
+    <noscript>
+      <nav>
+        <a href="index.html" class="nav-link">🏠 Accueil</a>
+        <a href="liste-jeux.html" class="nav-link">📚 Liste jeux</a>
+        <a href="generateur.html" class="nav-link">🛠 AkelaAI</a>
+        <a href="nouveau-jeu.html" class="nav-link">➕ Nouveau jeu</a>
+        <a href="contact.html" class="nav-link">📬 Contact</a>
+      </nav>
+    </noscript>
+    <script>
+      fetch('includes/navbar.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('navbar').innerHTML = html;
+        })
+        .catch(() => {
+          const fallback = document.querySelector('noscript nav');
+          if (fallback) {
+            document.getElementById('navbar').innerHTML = fallback.outerHTML;
+          }
+        });
+    </script>
 
-  <!-- Accueil -->
-  <section id="home" class="active">
-    <h2>🐾 Bienvenue sur Akela Toolbox !</h2>
-    <p class="intro">
-      Akela Toolbox réunit en un seul endroit les jeux Louveteaux, ressources d’animation et outils numériques indispensables pour organiser un week-end ou une réunion de meute. Pensé par et pour les chefs scouts, le site propose une navigation rapide, des fiches détaillées et des suggestions d’activités prêtes à l’emploi.
-    </p>
-    <p>
-      Ce site est un outil collaboratif pensé pour les chefs Louveteaux. Il facilite la préparation, la création et le partage de jeux d'animation.
-    </p>
+    <main>
+      <!-- Accueil -->
+      <section id="home" class="active">
+        <h2>🐾 Bienvenue sur Akela Toolbox !</h2>
+        <p class="intro">
+          Akela Toolbox réunit en un seul endroit les jeux Louveteaux, ressources d’animation et outils numériques indispensables pour organiser un week-end ou une réunion de meute. Pensé par et pour les chefs scouts, le site propose une navigation rapide, des fiches détaillées et des suggestions d’activités prêtes à l’emploi.
+        </p>
+        <p>
+          Ce site est un outil collaboratif pensé pour les chefs Louveteaux. Il facilite la préparation, la création et le partage de jeux d'animation.
+        </p>
 
-    <h3>✨ Fonctionnalités principales</h3>
-    <ul>
-      <li>📚 <a href="liste-jeux.html">Explorer</a> une liste de jeux Louveteaux</li>
-      <li>🔍 <a href="liste-jeux.html">Rechercher</a> rapidement un jeu dans la liste</li>
-      <li>🛠 <a href="generateur.html">Générer automatiquement</a> un programme d’activités avec <em>AkelaAI</em>, à partir de vos besoins</li>
-      <li>🆕 <a href="nouveau-jeu.html">Soumettre un nouveau jeu</a> via un formulaire simple, pour enrichir la base de données collective</li>
-      <li>📬 <a href="contact.html">Nous contacter</a> pour signaler un bug ou proposer une amélioration</li>
-    </ul>
+        <h3>✨ Fonctionnalités principales</h3>
+        <ul>
+          <li>📚 <a href="liste-jeux.html">Explorer</a> une liste de jeux Louveteaux</li>
+          <li>🔍 <a href="liste-jeux.html">Rechercher</a> rapidement un jeu dans la liste</li>
+          <li>🛠 <a href="generateur.html">Générer automatiquement</a> un programme d’activités avec <em>AkelaAI</em>, à partir de vos besoins</li>
+          <li>🆕 <a href="nouveau-jeu.html">Soumettre un nouveau jeu</a> via un formulaire simple, pour enrichir la base de données collective</li>
+          <li>📬 <a href="contact.html">Nous contacter</a> pour signaler un bug ou proposer une amélioration</li>
+        </ul>
 
-    <h3>📖 L'histoire du projet</h3>
-    <p>
-      Akela Toolbox est né d’un constat sur le terrain : les chefs ont pas le temps de préparer leurs activités (les études tu connais), et sur le moment soit t’es un génie des jeux, soit t’as un carnet de ta grand-mère qui était cheftaine avant toi, soit tu fais les mêmes jeux en boucle...  
-      J'ai donc conçu un outil simple, rapide et collaboratif.
-    </p>
-    <p>
-      Actuellement en phase de test (mais si vous kiffez on maintiendra), le site s’est étoffé avec l’ajout d’une base de données dynamique et d’un générateur de programmes intelligent grâce à <a href="generateur.html">AkelaAI</a>, un assistant basé sur un modèle de langage.
-    </p>
-    <p>
-      Ce projet reste libre et communautaire. Chaque contribution (jeu, retour, idée) est précieuse et aide à construire un outil utile pour tous les chefs de meute. Merci d’en faire partie !
-    </p>
-  </section>
+        <h3>📖 L'histoire du projet</h3>
+        <p>
+          Akela Toolbox est né d’un constat sur le terrain : les chefs ont pas le temps de préparer leurs activités (les études tu connais), et sur le moment soit t’es un génie des jeux, soit t’as un carnet de ta grand-mère qui était cheftaine avant toi, soit tu fais les mêmes jeux en boucle...<br>
+          J'ai donc conçu un outil simple, rapide et collaboratif.
+        </p>
+        <p>
+          Actuellement en phase de test (mais si vous kiffez on maintiendra), le site s’est étoffé avec l’ajout d’une base de données dynamique et d’un générateur de programmes intelligent grâce à <a href="generateur.html">AkelaAI</a>, un assistant basé sur un modèle de langage.
+        </p>
+        <p>
+          Ce projet reste libre et communautaire. Chaque contribution (jeu, retour, idée) est précieuse et aide à construire un outil utile pour tous les chefs de meute. Merci d’en faire partie !
+        </p>
+      </section>
+    </main>
 
-  <!-- footer -->
-  <div id="footer"></div>
-  <script>
-    fetch("includes/footer.html")
-      .then(res => res.text())
-      .then(html => document.getElementById("footer").innerHTML = html);
-  </script>
+    <!-- footer -->
+    <div id="footer"></div>
+    <script>
+      fetch("includes/footer.html")
+        .then(res => res.text())
+        .then(html => document.getElementById("footer").innerHTML = html);
+    </script>
+  </div>
 
 </body>
 </html>

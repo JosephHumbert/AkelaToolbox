@@ -1,3 +1,8 @@
+#
+# Usage: .\scripts\autocommit.ps1 'Improve SEO metadata and navigation'
+# This script stages all changes, commits them with the provided message, and pushes to origin.
+# Example: .\scripts\autocommit.ps1 'Update README with new instructions'
+
 [CmdletBinding()]
 param(
     [Parameter(Mandatory, Position = 0)]

@@ -17,86 +17,90 @@
   <meta name="twitter:title" content="Mentions légales - Akela Toolbox">
   <meta name="twitter:description" content="Découvrez les informations légales, contact et hébergement du projet Akela Toolbox.">
   <meta name="twitter:image" content="https://josephhumbert.github.io/AkelaToolbox/assets/social-card.svg">
-  <link rel="stylesheet" href="https://josephhumbert.github.io/AkelaToolbox/style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>🐺 Akela Toolbox</h1>
+  <div class="page-shell">
+    <h1>🐺 Akela Toolbox</h1>
 
-  <!-- navbar -->
-  <div id="navbar"></div>
-  <noscript>
-    <nav>
-      <a href="index.html" class="nav-link">🏠 Accueil</a>
-      <a href="liste-jeux.html" class="nav-link">📚 Liste jeux</a>
-      <a href="generateur.html" class="nav-link">🛠 AkelaAI</a>
-      <a href="nouveau-jeu.html" class="nav-link">➕ Nouveau jeu</a>
-      <a href="contact.html" class="nav-link">📬 Contact</a>
-    </nav>
-  </noscript>
-  <script>
-    fetch('https://josephhumbert.github.io/AkelaToolbox/includes/navbar.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('navbar').innerHTML = html;
-      })
-      .catch(() => {
-        const fallback = document.querySelector('noscript nav');
-        if (fallback) {
-          document.getElementById('navbar').innerHTML = fallback.outerHTML;
-        }
-      });
-  </script>
+    <!-- navbar -->
+    <div id="navbar"></div>
+    <noscript>
+      <nav>
+        <a href="index.html" class="nav-link">🏠 Accueil</a>
+        <a href="liste-jeux.html" class="nav-link">📚 Liste jeux</a>
+        <a href="generateur.html" class="nav-link">🛠 AkelaAI</a>
+        <a href="nouveau-jeu.html" class="nav-link">➕ Nouveau jeu</a>
+        <a href="contact.html" class="nav-link">📬 Contact</a>
+      </nav>
+    </noscript>
+    <script>
+      fetch('includes/navbar.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('navbar').innerHTML = html;
+        })
+        .catch(() => {
+          const fallback = document.querySelector('noscript nav');
+          if (fallback) {
+            document.getElementById('navbar').innerHTML = fallback.outerHTML;
+          }
+        });
+    </script>
 
-  <!-- Section Mentions légales -->
-  <section id="mentions-legales" class="active">
-    <h2>📄 Mentions légales</h2>
+    <main>
+      <!-- Section Mentions légales -->
+      <section id="mentions-legales" class="active">
+        <h2>📄 Mentions légales</h2>
 
-    <h3>Éditeur du site</h3>
-    <p>
-      Ce site est édité par :<br />
-      Bison T., Ière Saint Martin de Bréthencourt<br />
-      Contact : via le <a href="https://josephhumbert.github.io/AkelaToolbox/contact.html">formulaire de contact</a>
-    </p>
+        <h3>Éditeur du site</h3>
+        <p>
+          Ce site est édité par :<br />
+          Bison T., Ière Saint Martin de Bréthencourt<br />
+          Contact : via le <a href="contact.html">formulaire de contact</a>
+        </p>
 
-    <h3>Hébergement</h3>
-    <p>
-      Le site est hébergé via <strong>GitHub Pages</strong> :<br />
-      GitHub, Inc.<br />
-      88 Colin P Kelly Jr St<br />
-      San Francisco, CA 94107, USA<br />
-      <a href="https://pages.github.com/" target="_blank">https://pages.github.com/</a>
-    </p>
+        <h3>Hébergement</h3>
+        <p>
+          Le site est hébergé via <strong>GitHub Pages</strong> :<br />
+          GitHub, Inc.<br />
+          88 Colin P Kelly Jr St<br />
+          San Francisco, CA 94107, USA<br />
+          <a href="https://pages.github.com/" target="_blank" rel="noopener">https://pages.github.com/</a>
+        </p>
 
-    <h3>Données personnelles</h3>
-    <p>
-      Aucune donnée personnelle n’est collectée directement sur ce site.<br />
-      Les données saisies dans les formulaires sont stockées via <a href="https://sheetdb.io" target="_blank">SheetDB</a>, connecté à Google Sheets, uniquement à des fins de partage d’activités scoutes.
-    </p>
+        <h3>Données personnelles</h3>
+        <p>
+          Aucune donnée personnelle n’est collectée directement sur ce site.<br />
+          Les données saisies dans les formulaires sont stockées via <a href="https://sheetdb.io" target="_blank" rel="noopener">SheetDB</a>, connecté à Google Sheets, uniquement à des fins de partage d’activités scoutes.
+        </p>
 
-    <h3>Cookies</h3>
-    <p>
-      Ce site ne dépose aucun cookie tiers à des fins publicitaires ou de suivi. Seules des fonctions techniques sont utilisées (chargement des données, navigation).
-    </p>
+        <h3>Cookies</h3>
+        <p>
+          Ce site ne dépose aucun cookie tiers à des fins publicitaires ou de suivi. Seules des fonctions techniques sont utilisées (chargement des données, navigation).
+        </p>
 
-    <h3>Propriété intellectuelle</h3>
-    <p>
-      Tous les contenus (textes, idées d'activités) partagés sont mis à disposition par la communauté scoute et peuvent être réutilisés librement dans un cadre éducatif et bénévole.
-    </p>
+        <h3>Propriété intellectuelle</h3>
+        <p>
+          Tous les contenus (textes, idées d'activités) partagés sont mis à disposition par la communauté scoute et peuvent être réutilisés librement dans un cadre éducatif et bénévole.
+        </p>
 
-    <h3>Contact</h3>
-    <p>
-      Pour toute question ou demande de retrait de contenu, merci d’utiliser le <a href="https://josephhumbert.github.io/AkelaToolbox/contact.html">formulaire de contact</a>.
-    </p>
-  </section>
+        <h3>Contact</h3>
+        <p>
+          Pour toute question ou demande de retrait de contenu, merci d’utiliser le <a href="contact.html">formulaire de contact</a>.
+        </p>
+      </section>
+    </main>
 
-  <!-- footer -->
-  <div id="footer"></div>
-  <script>
-    fetch("https://josephhumbert.github.io/AkelaToolbox/includes/footer.html")
-      .then(res => res.text())
-      .then(html => document.getElementById("footer").innerHTML = html);
-  </script>
+    <!-- footer -->
+    <div id="footer"></div>
+    <script>
+      fetch("includes/footer.html")
+        .then(res => res.text())
+        .then(html => document.getElementById("footer").innerHTML = html);
+    </script>
+  </div>
 
 </body>
 </html>

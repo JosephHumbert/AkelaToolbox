@@ -17,7 +17,7 @@
   <meta name="twitter:title" content="Contact - Akela Toolbox">
   <meta name="twitter:description" content="Échangez avec l'équipe Akela Toolbox et contribuez à la communauté Louveteaux.">
   <meta name="twitter:image" content="https://josephhumbert.github.io/AkelaToolbox/assets/social-card.svg">
-  <link rel="stylesheet" href="https://josephhumbert.github.io/AkelaToolbox/style.css">
+  <link rel="stylesheet" href="style.css">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -31,63 +31,67 @@
 
 <body>
 
-  <h1>🐺 Akela Toolbox</h1>
+  <div class="page-shell">
+    <h1>🐺 Akela Toolbox</h1>
 
-  <!-- navbar -->
-  <div id="navbar"></div>
-  <noscript>
-    <nav>
-      <a href="index.html" class="nav-link">🏠 Accueil</a>
-      <a href="liste-jeux.html" class="nav-link">📚 Liste jeux</a>
-      <a href="generateur.html" class="nav-link">🛠 AkelaAI</a>
-      <a href="nouveau-jeu.html" class="nav-link">➕ Nouveau jeu</a>
-      <a href="contact.html" class="nav-link">📬 Contact</a>
-    </nav>
-  </noscript>
-  <script>
-    fetch('https://josephhumbert.github.io/AkelaToolbox/includes/navbar.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('navbar').innerHTML = html;
-      })
-      .catch(() => {
-        const fallback = document.querySelector('noscript nav');
-        if (fallback) {
-          document.getElementById('navbar').innerHTML = fallback.outerHTML;
-        }
-      });
-  </script>
+    <!-- navbar -->
+    <div id="navbar"></div>
+    <noscript>
+      <nav>
+        <a href="index.html" class="nav-link">🏠 Accueil</a>
+        <a href="liste-jeux.html" class="nav-link">📚 Liste jeux</a>
+        <a href="generateur.html" class="nav-link">🛠 AkelaAI</a>
+        <a href="nouveau-jeu.html" class="nav-link">➕ Nouveau jeu</a>
+        <a href="contact.html" class="nav-link">📬 Contact</a>
+      </nav>
+    </noscript>
+    <script>
+      fetch('includes/navbar.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('navbar').innerHTML = html;
+        })
+        .catch(() => {
+          const fallback = document.querySelector('noscript nav');
+          if (fallback) {
+            document.getElementById('navbar').innerHTML = fallback.outerHTML;
+          }
+        });
+    </script>
 
-  <!-- Section Contact -->
-  <section id="contact" class="active">
-    <h2>📬 Formulaire de contact</h2>
+    <main>
+      <!-- Section Contact -->
+      <section id="contact" class="active">
+        <h2>📬 Formulaire de contact</h2>
 
-    <form id="contact-form">
-      <label for="nom">Nom</label>
-      <input type="text" name="nom" id="nom" required />
+        <form id="contact-form">
+          <label for="nom">Nom</label>
+          <input type="text" name="nom" id="nom" required />
 
-      <label for="email">Email</label>
-      <input type="email" name="email" id="email" required />
+          <label for="email">Email</label>
+          <input type="email" name="email" id="email" required />
 
-      <label for="objet">Objet</label>
-      <input type="text" name="objet" id="objet" required />
+          <label for="objet">Objet</label>
+          <input type="text" name="objet" id="objet" required />
 
-      <label for="message">Message</label>
-      <textarea name="message" id="message" rows="6" required></textarea>
+          <label for="message">Message</label>
+          <textarea name="message" id="message" rows="6" required></textarea>
 
-      <button type="submit" id="submit-btn">Envoyer</button>
-    </form>
+          <button type="submit" id="submit-btn">Envoyer</button>
+        </form>
 
-    <div id="feedback">💬 Saisissez votre message.</div>
-  </section>
+        <div id="feedback">💬 Saisissez votre message.</div>
+      </section>
+    </main>
 
-  <!-- footer -->
-  <div id="footer"></div>
-  <script>
-    fetch("https://josephhumbert.github.io/AkelaToolbox/includes/footer.html")
-      .then(res => res.text())
-      .then(html => document.getElementById("footer").innerHTML = html);
-  </script>
+    <!-- footer -->
+    <div id="footer"></div>
+    <script>
+      fetch("includes/footer.html")
+        .then(res => res.text())
+        .then(html => document.getElementById("footer").innerHTML = html);
+    </script>
+  </div>
 
   <!-- Script de validation et d'envoi -->
   <script>
