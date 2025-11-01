@@ -465,8 +465,8 @@ button:hover::after,
   }
 
   nav {
-    flex-direction: column;
-    align-items: stretch;
+    justify-content: center;
+    gap: 0.6rem;
   }
 
   nav .nav-link,
@@ -475,6 +475,14 @@ button:hover::after,
   #sendBtn {
     max-width: none;
     width: 100%;
+  }
+
+  nav .nav-link {
+    flex: 1 1 calc(50% - 0.6rem);
+    min-width: 140px;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.95rem;
+    border-radius: 10px;
   }
 
   th,
@@ -499,5 +507,16 @@ button:hover::after,
   h1,
   h2 {
     font-size: 1.35rem;
+  }
+
+  nav {
+    gap: 0.45rem;
+  }
+
+  nav .nav-link {
+    flex: 1 1 calc(50% - 0.45rem);
+    padding: 0.5rem 0.65rem;
+    font-size: 0.9rem;
+    min-width: 120px;
   }
 }
